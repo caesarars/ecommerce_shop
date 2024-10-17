@@ -10,15 +10,14 @@ import model4 from "../static/model4.png"
 import ErrorPopUp from "../components/ErrorPopUp/ErrorPopUp";
 import SuccessPopUp from "../components/SuccessPopUp/SuccessPopUp";
 import LoadingComponent from "../components/LoadingComponent/LoadingComponent";
-import Button from '@mui/material/Button';
-
+import { API_URLS } from "../api/apiURLs";
 
 import { setUser } from '../userSlice';  // Import the setUser action
 import { useDispatch } from 'react-redux';
 
 
 const Login = () => {
-    const URL_LOGIN = "http://localhost:3000/login"
+    const URL_LOGIN = API_URLS.LOGIN;
 
     const [email, setEmail] = useState(""); // State to store username
     const [password, setPassword] = useState(""); // State to store password

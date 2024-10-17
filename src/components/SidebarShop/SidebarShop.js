@@ -1,22 +1,18 @@
 import React from "react";
 import "./SidebarShop.css"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import Category from "./Category";
+import Brands from "./Brands";
+import Price from "./Price";
+import Size from "./Size";
 
 const SidebarShop = () => {
     return (
         <div className="container_sidebar">
             <div className="container mt-2">
-                <div className="montserrat-normal d-flex justify-content-between">
-                    <span>Category</span> <FontAwesomeIcon icon={faChevronRight} /> 
-                </div>
-                <div className="montserrat-normal">
-
-                    <span>Brands</span> <FontAwesomeIcon icon={faChevronRight} /> 
-
-                </div>
-                <div className="montserrat-normal">Price</div>
-                <div className="montserrat-normal">Size</div>
+                <Category />
+                <Brands />
+                <Price />
+                <Size/>        
             </div>
         </div>
     )
