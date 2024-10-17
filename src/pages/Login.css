@@ -1,0 +1,15 @@
+.left_side {
+    background-color: black;
+    width: 50%;
+    height: 100vh;
+}
+
+.right_side {
+    background-color: white;
+    width: 50%;
+    height: 99vh;
+}
+
+#ecommerce_name:hover {
+    cursor: pointer;
+}

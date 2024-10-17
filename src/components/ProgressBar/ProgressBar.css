@@ -1,0 +1,16 @@
+.line_1 {
+    background-color: lightgrey;
+    height: 5px;
+    width: 50%;
+}
+
+.line_2 {
+    background-color: lightgrey;
+    height: 5px;
+    width: 50%;
+}
+
+
+.container_grey_dots {
+    position: relative;
+}

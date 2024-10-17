@@ -1,0 +1,7 @@
+.container_product:hover {
+    cursor: pointer;
+}
+
+#image_product {
+    border-radius: 8px;
+}

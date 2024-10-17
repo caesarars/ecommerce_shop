@@ -1,0 +1,21 @@
+
+.fontSizeDiscount {
+    font-size: 4em;
+    text-align: center;
+}
+
+.fontSizeRegister {
+    font-size: 3em;
+    text-align: center;
+}
+
+.background_orange {
+    background-color: #edb203;
+    border-radius: 16px;
+}
+
+.container_discount {
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 16px;
+}

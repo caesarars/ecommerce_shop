@@ -1,0 +1,35 @@
+.mainColor {
+    color : #333333
+}
+
+.ecommerceName {
+    font-size:16px;
+    font-weight: bold;
+}
+
+.backgroundColor {
+    background-color :  #F5F5F5
+}
+
+.heightNav {
+    height: 32px;
+}
+
+.button_login:hover{
+    cursor: pointer;
+}
+
+.profile_menu {
+    position: absolute;
+    right: 0px;
+    background-color:#f8f8f8;
+    padding: 8px;
+    border-top: 2px solid black;
+    border-radius: 8px;
+    height: 20vh;
+    width: 12%;
+}
+
+.menu_link:hover {
+    cursor: pointer;
+}

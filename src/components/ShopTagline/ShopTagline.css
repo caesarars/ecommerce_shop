@@ -1,0 +1,19 @@
+.greybox {
+    position: absolute;
+    background-color: lightgrey;
+    height: 320px;
+    height: 420px;
+    right: 0;
+}
+
+.orange {
+    color: #edb203;
+}
+
+.w-80 {
+    width: 80%;
+}
+
+.margin-center {
+    margin: 0 auto;
+}

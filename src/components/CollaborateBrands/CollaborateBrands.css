@@ -1,0 +1,9 @@
+.container_brands > h3 {
+    text-align: center;
+    width: 240px;
+    height: 96px;
+}
+
+.orange {
+   color: #edb203;
+}

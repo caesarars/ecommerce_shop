@@ -1,0 +1,11 @@
+.container_label > span{
+    margin: 24px;
+    padding:16px;
+    border-radius: 8px;
+}
+
+.container_label > span:hover{
+    background-color: black;
+    color :white;
+    cursor: pointer;
+}

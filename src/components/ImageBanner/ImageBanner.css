@@ -1,0 +1,24 @@
+.image-banner {
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.5s ease-in-out; /* Smooth transition for fading */
+    opacity: 1; /* Default opacity */
+    height: 20vh;
+  }
+  
+  .image-banner.fade {
+    opacity: 0; /* Reduce opacity during fading */
+  }
+  
+  .outlined-text {
+    color: white; /* The main text color */
+    text-shadow: 
+      -1px -1px 0 black,  
+       1px -1px 0 black,  
+      -1px  1px 0 black,  
+       1px  1px 0 black;  /* Creating the "outline" using 4 shadows */
+  }
+
+  .banner-text {
+    color: #edb203;
+  }
