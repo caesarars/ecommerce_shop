@@ -37,10 +37,27 @@ const Shop = () => {
         <div>
             <Navbar />
             <div className="container">
-                <div className="mt-5 mb-5"></div>
+                <div className="mt-5"></div>
+                <div className="" style={{marginLeft:"190px",marginBottom:"8px" , padding:"16px"}}>
+                    <div className="d-flex justify-content-between align-items-center flex-wrap"> 
+                        <span className="montserrat-light">Showing {data ? data.length : ""} products</span>
+                        <div className="montserrat-light">
+                            <div className="input-group mb-3">
+                                <span className="input-group-text">Sort By</span>
+                                <select className="form-control">
+                                    <option>Latest</option>
+                                    <option>Lowest Price</option>
+                                    <option>High Price</option>
+                                    <option>Popularity</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
                 <div className="d-flex justify-content-around">
-                    {renderSidebar()}
                     {renderError()}
+                    <SidebarShop />
                     <ShopLoading loading={loading} />
                     <ShopProducts error={error} loading={loading} data={data}/>
                 </div>

@@ -7,9 +7,9 @@ const ShopProducts = ({error, loading, data}) => {
         <>
             {!loading && !error && 
                     (
-                        <div className="d-flex flex-wrap justify-content-around">
+                        <div className="d-flex flex-wrap justify-content-between flex-wrap">
                             {data && data.map((el) => (
-                                <div key={el._id} className="mb-5"> {/* Use el._id as the unique key */}
+                                <div key={el._id} className="mb-3"> {/* Use el._id as the unique key */}
                                     <ProductItem 
                                         id={el._id}
                                         name={el.name} 

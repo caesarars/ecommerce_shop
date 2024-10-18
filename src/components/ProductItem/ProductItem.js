@@ -7,7 +7,7 @@ const ProductItem = ({ id, name , fileUrl, price ,stock }) => {
     const navigate = useNavigate();
 
     return (
-        <div className="container container_product w-80">
+        <div className="container container_product">
             <div className="d-flex flex-column">
                 <img id="image_product" src={fileUrl}  width="320px" height="360px" onClick={() => navigate(`/product/${id}`)}/>
                 <span className="fw-bold">{name}</span>
