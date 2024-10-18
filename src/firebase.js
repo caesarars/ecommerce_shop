@@ -6,7 +6,7 @@ import { getAnalytics } from "firebase/analytics";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBw9D6yLpAt7_G85ZZ06JwAeJR62_rvFDE",
+  apiKey: "",
   authDomain: "image-storing-project.firebaseapp.com",
   databaseURL: "https://image-storing-project-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "image-storing-project",
@@ -17,7 +17,6 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
