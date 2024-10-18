@@ -1,44 +1,72 @@
 import React, { useState } from "react";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Price = () => {
+const PriceInput = ({ label, value, onChange, id, min, max }) => (
+    <div className="mt-3">
+        <div className="input-group mb-3">
+            <span className="input-group-text" id={`basic-addon-${id}`}>{label} :</span>
+            <input 
+                className="form-control" 
+                type="number" 
+                value={value} 
+                onChange={onChange} 
+                aria-labelledby={`basic-addon-${id}`} 
+            />
+        </div>
+        <input 
+            type="range" 
+            className="form-range" 
+            min={min} 
+            max={max} 
+            value={value} 
+            id={id} 
+            onChange={onChange} 
+        />
+    </div>
+);
 
-    const [priceRangeMin , setPriceRangeMin] = useState(0)
-    const [priceRangeMax , setPriceRangeMax] = useState(0)
+const Price = () => {
+    const [priceRangeMin, setPriceRangeMin] = useState(0);
+    const [priceRangeMax, setPriceRangeMax] = useState(0);
+    const [togglePrice, setTogglePrice] = useState(false);
 
     const handleOnChangeMinPrice = (e) => {
-        setPriceRangeMin(e.target.value)
-    }
-    
-    const handleOnChangeMaxPrice = (e) => {
-        setPriceRangeMax(e.target.value)
-    }
+        setPriceRangeMin(parseInt(e.target.value, 10));
+    };
 
+    const handleOnChangeMaxPrice = (e) => {
+        setPriceRangeMax(parseInt(e.target.value, 10));
+    };
 
     return (
         <>
-         <div className="montserrat-normal d-flex justify-content-between">
-            <span>Price</span> <FontAwesomeIcon icon={faChevronRight} /> 
-        </div>
+            <div className="montserrat-normal d-flex justify-content-between" onClick={() => setTogglePrice(!togglePrice)}>
+                <span>Price</span> <FontAwesomeIcon icon={togglePrice ? faChevronDown : faChevronRight} />
+            </div>
 
-        <div className="mt-3">
-            <div className="input-group mb-3">
-                <span className="input-group-text" id="basic-addon1">Min :</span>
-                <input className="form-control" type="text" value={priceRangeMin} onChange={(e) => handleOnChangeMinPrice(e)}/>
-            </div>
-            <input type="range" className="form-range" min="1" max="2000" value={priceRangeMin} id="customRange2" onChange={(e)=> handleOnChangeMinPrice(e)}></input>
-        </div>
-        <div>
-        <div className="input-group mb-3">
-                <span className="input-group-text" id="basic-addon1">Max :</span>
-                <input className="form-control" type="text" value={priceRangeMax} onChange={(e) => handleOnChangeMaxPrice(e)}/>
-            </div>
-            <input type="range" className="form-range" min="1" max="2000" id="customRange2" value={priceRangeMax} onChange={(e)=> handleOnChangeMaxPrice(e)}></input>
-        </div>
+            {togglePrice && (
+                <div className="p-2">
+                    <PriceInput
+                        label="Min"
+                        value={priceRangeMin}
+                        onChange={handleOnChangeMinPrice}
+                        id="customRangeMin"
+                        min="1"
+                        max="2000"
+                    />
+                    <PriceInput
+                        label="Max"
+                        value={priceRangeMax}
+                        onChange={handleOnChangeMaxPrice}
+                        id="customRangeMax"
+                        min="1"
+                        max="2000"
+                    />
+                </div>
+            )}
         </>
-       
-    )
-}
+    );
+};
 
-export default Price
+export default Price;

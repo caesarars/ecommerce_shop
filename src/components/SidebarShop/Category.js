@@ -15,7 +15,7 @@ const Category = () => {
             </div>
 
             {toggleCategory && (
-                <div className="montserrat-light d-flex flex-column">
+                <div className="montserrat-light d-flex flex-column p-2">
                 <span>Women</span>
                 <span>Men</span>
             </div>
