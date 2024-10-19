@@ -4,9 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faChevronDown} from "@fortawesome/free-solid-svg-icons";
 
 
-const Apparels = () => {
+const Apparels = ({onApparelsSelect}) => {
 
     const [toggleApparels, setToggleApparels] = useState(false)
+
+    const handleSelectApparels = (apparels) => {
+        onApparelsSelect(apparels)
+    }
 
     return (
         <>
@@ -16,11 +20,11 @@ const Apparels = () => {
 
             {toggleApparels && (
                 <div className="montserrat-light d-flex flex-column p-2">
-                <span>T-Shirt</span>
-                <span>Hoodie</span>
-                <span>Skirt</span>
-                <span>Jacket</span>
-                <span>Flannel</span>
+                <span onClick={()=>handleSelectApparels("tshirt")}>T-Shirt</span>
+                <span onClick={()=>handleSelectApparels("hoodie")}>Hoodie</span>
+                <span onClick={()=>handleSelectApparels("skrit")}>Skirt</span>
+                <span onClick={()=>handleSelectApparels("jacket")}>Jacket</span>
+                <span onClick={()=>handleSelectApparels("flannel")}>Flannel</span>
             </div>
             )}      
         </>

@@ -26,17 +26,19 @@ const PriceInput = ({ label, value, onChange, id, min, max }) => (
     </div>
 );
 
-const Price = () => {
+const Price = ({onPriceMinSelect , onPriceMaxSelect}) => {
     const [priceRangeMin, setPriceRangeMin] = useState(0);
     const [priceRangeMax, setPriceRangeMax] = useState(0);
     const [togglePrice, setTogglePrice] = useState(false);
 
     const handleOnChangeMinPrice = (e) => {
         setPriceRangeMin(parseInt(e.target.value, 10));
+        onPriceMinSelect(e.target.value,10)
     };
 
     const handleOnChangeMaxPrice = (e) => {
         setPriceRangeMax(parseInt(e.target.value, 10));
+        onPriceMaxSelect(e.target.value,10)
     };
 
     return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Navbar from "../components/Navbar";
 import ProductItem from "../components/ProductItem/ProductItem";
 import Footer from "../components/Footer/Footer"
@@ -16,6 +16,8 @@ import ShopLoading from "../components/Shop/ShopLoading";
 const Shop = () => {
 
     const { data, loading, error } = useFetch(API_URLS.GET_PRODUCTS);
+    const [filters, setFilters] = useState({});
+
 
     const renderSidebar = () => {
         return (
@@ -32,6 +34,11 @@ const Shop = () => {
             )
         )
     }
+
+    const handleFilterShop = (filterData) => {
+        setFilters(filterData);
+        console.log("Filters applied:", filterData); // You can apply filtering logic here
+      };
 
     return (
         <div>
@@ -57,7 +64,7 @@ const Shop = () => {
                
                 <div className="d-flex justify-content-around">
                     {renderError()}
-                    <SidebarShop />
+                    <SidebarShop handleFilterShop={handleFilterShop}/>
                     <ShopLoading loading={loading} />
                     <ShopProducts error={error} loading={loading} data={data}/>
                 </div>
