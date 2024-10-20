@@ -5,7 +5,7 @@ import Apparels from "./Apparels";
 import Price from "./Price";
 import Size from "./Size";
 
-const SidebarShop = ({ handleFilterShop }) => {
+const SidebarShop = ({ handleFilterShop, applyFilter }) => {
 
     const [selectedCategory, setSelectedCategory] = useState("");
     const [filter, setFilter] = useState({})
@@ -67,7 +67,8 @@ const SidebarShop = ({ handleFilterShop }) => {
                 <Category onCategorySelect={handleCategorySelect} />
                 <Apparels onApparelsSelect={handleApparelsSelect}/>
                 <Price onPriceMinSelect={handleMinPrice} onPriceMaxSelect={handleMaxPrice}/>
-                <Size onSizeSelect={handleSelectSize}/>        
+                <Size onSizeSelect={handleSelectSize}/>  
+                <div className="btn btn-primary" onClick={() => applyFilter()}>Apply</div>      
             </div>
         </div>
     )

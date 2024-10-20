@@ -11,19 +11,55 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import ShopProducts from "../components/Shop/ShopProducts";
 import ShopLoading from "../components/Shop/ShopLoading";
+import axios from "axios";
 
 
 const Shop = () => {
 
-    const { data, loading, error } = useFetch(API_URLS.GET_PRODUCTS);
+    let { data, loading, error } = useFetch(API_URLS.GET_PRODUCTS);
+
     const [filters, setFilters] = useState({});
 
+    const [filteredData, setFilteredData] = useState([]);
 
-    const renderSidebar = () => {
-        return (
-            !error && <SidebarShop />
-        )
-    }
+    // Function to apply filters to the fetched products
+    const applyFilter = () => {
+      if (!data) return; // If no data is available, do nothing
+  
+      // Apply the filters to the data
+      const filtered = data.filter((product) => {
+        let isValid = true;
+  
+        // Apply category filter
+        if (filters.category && product.category !== filters.category) {
+          isValid = false;
+        }
+  
+        // Apply apparels filter (if applicable)
+        if (filters.apparels && product.apparels !== filters.apparels) {
+          isValid = false;
+        }
+  
+        // Apply price range filter
+        if (filters.minPrice && product.price < filters.minPrice) {
+          isValid = false;
+        }
+        if (filters.maxPrice && product.price > filters.maxPrice) {
+          isValid = false;
+        }
+  
+        // Apply size filter (if applicable)
+        if (filters.size && !product.sizes.includes(filters.size)) {
+          isValid = false;
+        }
+  
+        return isValid;
+      });
+  
+      // Update the filtered data state
+      setFilteredData(filtered);
+    };
+  
 
     const renderError = () => {
         return (
@@ -35,9 +71,20 @@ const Shop = () => {
         )
     }
 
+    const fetchProducts = async () => {
+        const queryString = Object.filter(filters)
+            .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(filters[key])}`)
+            .join("&")
+            const response = await axios(`${API_URLS.GET_PRODUCTS}?${queryString}`);
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();    
+    }
+
     const handleFilterShop = (filterData) => {
         setFilters(filterData);
-        console.log("Filters applied:", filterData); // You can apply filtering logic here
+        fetchProducts()
       };
 
     return (
@@ -64,7 +111,7 @@ const Shop = () => {
                
                 <div className="d-flex justify-content-around">
                     {renderError()}
-                    <SidebarShop handleFilterShop={handleFilterShop}/>
+                    <SidebarShop handleFilterShop={handleFilterShop} applyFilter={applyFilter}/>
                     <ShopLoading loading={loading} />
                     <ShopProducts error={error} loading={loading} data={data}/>
                 </div>
