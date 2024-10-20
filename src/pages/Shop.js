@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Navbar from "../components/Navbar";
 import ProductItem from "../components/ProductItem/ProductItem";
 import Footer from "../components/Footer/Footer"
 import { API_URLS } from "../api/apiURLs";
-
+import { getProductsUrlParams } from "../api/getProductsUrlParams";
 import SidebarShop from "../components/SidebarShop/SidebarShop";
 
 import { useFetch } from "../api/getProducts";
@@ -13,10 +13,29 @@ import ShopProducts from "../components/Shop/ShopProducts";
 import ShopLoading from "../components/Shop/ShopLoading";
 import axios from "axios";
 
+// Your API call function
+const fetchData = async (url) => {
+    try {
+      const response = await fetch(url);
+      if (response.ok) {
+        const result = await response.json();
+        return result;
+      } else {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return null; // Return null or handle the error response
+    }
+  };
 
 const Shop = () => {
 
-    let { data, loading, error } = useFetch(API_URLS.GET_PRODUCTS);
+    const [data, setData] = useState([])
+    
+   
+    const [error , setError] = useState(false) 
+    const [loading, setLoading] = useState(false)
 
     const [filters, setFilters] = useState({});
 
@@ -58,6 +77,7 @@ const Shop = () => {
   
       // Update the filtered data state
       setFilteredData(filtered);
+      fetchProducts();
     };
   
 
@@ -71,20 +91,34 @@ const Shop = () => {
         )
     }
 
+
+    useEffect(()=> {
+        fetchProducts()
+    }, [])
+
     const fetchProducts = async () => {
-        const queryString = Object.filter(filters)
-            .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(filters[key])}`)
-            .join("&")
-            const response = await axios(`${API_URLS.GET_PRODUCTS}?${queryString}`);
-            if (!response.ok) {
-              throw new Error("Network response was not ok");
-            }
-            return response.json();    
-    }
+        let queryString = "?";
+        
+        if (filters && Object.keys(filters).length > 0) {
+          const filterQuery = Object.keys(filters)
+            .map(key => `${key}=${filters[key]}`)
+            .join("&");
+            
+          queryString += filterQuery;
+        }
+    
+        const urlParams = API_URLS.GET_PRODUCTS + queryString;
+        console.log("Request URL:", urlParams);
+    
+        const response = await fetchData(urlParams); // Await the result of fetchData
+        if (response) {
+          setData(response);  // Update state with the response data
+          console.log("Fetched Products:", response);
+        }
+      };
 
     const handleFilterShop = (filterData) => {
         setFilters(filterData);
-        fetchProducts()
       };
 
     return (
