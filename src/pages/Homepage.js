@@ -10,7 +10,6 @@ import Footer from '../components/Footer/Footer';
  const Homepage = () => {
     return (
         <>
-            <div>
                 <Navbar/>
                 <ImageBanner />
                 <ShopTagline />
@@ -18,7 +17,6 @@ import Footer from '../components/Footer/Footer';
                 <NewArrival />
                 <DiscountBanner />
                 <Footer />
-            </div>
         </>
     )
 }

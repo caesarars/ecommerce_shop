@@ -56,6 +56,8 @@ const Login = () => {
 
     const handleLogin = async () => {
         setIsLoading(true)
+
+        console.log("handle Login")
         try {
             const response = await axios.post(URL_LOGIN , {
                 email: email,
@@ -65,7 +67,6 @@ const Login = () => {
             if (response.status === 200 ) {
                 console.log(response)
                 setSuccessLogin(true)
-              
                 dispatch(setUser(
                     {
                         email:response.data.user.email,

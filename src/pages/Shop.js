@@ -12,6 +12,8 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import ShopProducts from "../components/Shop/ShopProducts";
 import ShopLoading from "../components/Shop/ShopLoading";
 import axios from "axios";
+import Pagination from "../components/Pagination/Pagination";
+
 
 // Your API call function
 const fetchData = async (url) => {
@@ -36,6 +38,8 @@ const Shop = () => {
    
     const [error , setError] = useState(false) 
     const [loading, setLoading] = useState(false)
+    const [ totalData , setTotalData ] = useState(0)
+    const [ pagination, setPagination ] = useState({})
 
     const [filters, setFilters] = useState({});
 
@@ -48,7 +52,7 @@ const Shop = () => {
       // Apply the filters to the data
       const filtered = data.filter((product) => {
         let isValid = true;
-  
+
         // Apply category filter
         if (filters.category && product.category !== filters.category) {
           isValid = false;
@@ -68,7 +72,7 @@ const Shop = () => {
         }
   
         // Apply size filter (if applicable)
-        if (filters.size && !product.sizes.includes(filters.size)) {
+        if (filters.size && !product.detail.includes(filters.size)) {
           isValid = false;
         }
   
@@ -112,23 +116,30 @@ const Shop = () => {
     
         const response = await fetchData(urlParams); // Await the result of fetchData
         if (response) {
-          setData(response);  // Update state with the response data
+          setData(response.products);  // Update state with the response data
+          setTotalData(response.pagination.totalItems)
+          setPagination(response.pagination)
           console.log("Fetched Products:", response);
         }
       };
+
+    // TO DO FUNCTIONS :  
+    const clearFilter = () => {
+
+    }  
 
     const handleFilterShop = (filterData) => {
         setFilters(filterData);
       };
 
     return (
-        <div>
+        <>
             <Navbar />
-            <div className="container">
+            <div className="container" style={{height :''}}>
                 <div className="mt-5"></div>
                 <div className="" style={{marginLeft:"190px",marginBottom:"8px" , padding:"16px"}}>
                     <div className="d-flex justify-content-between align-items-center flex-wrap"> 
-                        <span className="montserrat-light">Showing {data ? data.length : ""} products</span>
+                        <span className="montserrat-light">Showing {totalData} products</span>
                         <div className="montserrat-light">
                             <div className="input-group mb-3">
                                 <span className="input-group-text">Sort By</span>
@@ -143,15 +154,21 @@ const Shop = () => {
                     </div>
                 </div>
                
-                <div className="d-flex justify-content-around">
+                <div className="d-flex flex-row">
                     {renderError()}
-                    <SidebarShop handleFilterShop={handleFilterShop} applyFilter={applyFilter}/>
+                    <div style={{width:"20%"}}>
+                        <SidebarShop handleFilterShop={handleFilterShop} applyFilter={applyFilter} clearFilter={clearFilter}/>
+                    </div>
+                    
                     <ShopLoading loading={loading} />
-                    <ShopProducts error={error} loading={loading} data={data}/>
+                    <div style={{width:"80%"}}>
+                        <ShopProducts error={error} loading={loading} data={data}/>
+                    </div>
                 </div>
             </div>
+            <Pagination currentPage={pagination.currentPage} totalPages={pagination.totalPages} totalItems={pagination.totalItems}/>
             <Footer />
-        </div>
+        </>
     );
 };
 

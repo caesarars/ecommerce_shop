@@ -6,6 +6,9 @@ const Category = ({ onCategorySelect, clearFilter }) => {
     const [isCategoryOpen, setCategoryOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState("");
 
+    const activeCategory = "p-2 bg-dark text-white"
+
+
     const categories = [
         { id: "women", label: "Women" },
         { id: "men", label: "Men" },
@@ -13,23 +16,26 @@ const Category = ({ onCategorySelect, clearFilter }) => {
     ];
 
     const handleCategoryClick = (category) => {
-        if (selectedCategory !== category) { // Prevent redundant updates
-            setSelectedCategory(category);
-            onCategorySelect(category);
+        onCategorySelect(category)
+        setSelectedCategory(category)
+        if (category === selectedCategory) {
+            setSelectedCategory("")
+            onCategorySelect("")
         }
     };
 
-    const getClassNames = (category) => {
-        return selectedCategory === category ? "p-2 bg-dark text-white" : "p-2";
-    };
-
+    const getCssClass = (category) => {
+        if (category === selectedCategory) {
+            return activeCategory;
+        }
+        return "p-2"
+    }
+    
     return (
         <>
             <div
                 className="montserrat-normal d-flex justify-content-between"
                 onClick={() => setCategoryOpen(!isCategoryOpen)}
-                role="button"
-                tabIndex="0"
             >
                 <span>Category</span>
                 <FontAwesomeIcon icon={isCategoryOpen ? faChevronDown : faChevronRight} />
@@ -40,10 +46,8 @@ const Category = ({ onCategorySelect, clearFilter }) => {
                     {categories.map((category) => (
                         <span
                             key={category.id}
-                            className={getClassNames(category.id)}
+                            className={getCssClass(category.id)}
                             onClick={() => handleCategoryClick(category.id)}
-                            role="button"
-                            tabIndex="0"
                         >
                             {category.label}
                         </span>

@@ -5,10 +5,11 @@ import "./Product.css"
 import Order from "../../pages/Order";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
+import { faL, faPlus, faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
 import { faStarHalfAlt as halfStar } from '@fortawesome/free-solid-svg-icons'; // Import half-star
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
+import PopUp from "../PopUp/PopUp"
 
 
 const Product = () => {
@@ -29,6 +30,7 @@ const Product = () => {
     const [ features, setFeatures ] = useState([])
     const [ quantity , setQuantity ] = useState(1)
     const [ totalPrice, setTotalPrice] = useState(priceProduct)
+    const [ toggleModal, setToggleModal ] = useState(false);
 
     console.log("Product totalPrice : ", totalPrice)
 
@@ -54,6 +56,14 @@ const Product = () => {
         setFeatures(response.data.features)
         setTotalPrice(response.data.price)
         console.log("response detail ", response.data)
+    }
+
+    const showModal = () => {
+        setToggleModal(true)
+    }
+
+    const handleClose = () => {
+        setToggleModal(false)
     }
 
     const detailPage = () => {
@@ -96,7 +106,7 @@ const Product = () => {
                             <p style={{fontWeight:"bold", fontSize:"36px"}}>${priceProduct * quantity}</p>
                             <div className="mb-4">
                                 <h3 className="montserrat-normal">Available Size</h3>
-                                <button className="btn btn-dark" style={{width:"48px", marginRight:"12px"}}>S</button>
+                                <button className="btn btn-dark" style={{width:"48px", marginRight:"12px"}} onClick={ () => setToggleModal(true)}>S</button>
                                 <button className="btn btn-light" style={{width:"48px", marginRight:"12px"}}>M</button>
                                 <button className="btn btn-light" style={{width:"48px", marginRight:"12px"}}>L</button>
                                 <button className="btn btn-light" style={{width:"48px", marginRight:"12px"}}>XL</button>
@@ -125,6 +135,10 @@ const Product = () => {
                             </div>
                             <div></div>
                         </div>
+
+                        <PopUp show={toggleModal} handleClose={handleClose} >
+                            <h3>Detail</h3>
+                        </PopUp>
                        
                        <div className="d-flex justify-content-between align-items-center mt-2">
                             <div className="btn btn-light width-30">
