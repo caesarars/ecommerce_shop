@@ -62,7 +62,8 @@ const SidebarShop = ({ handleFilterShop, applyFilter, clearFilter }) => {
       };
 
     return (
-        <div className="container_sidebar">
+      <div style={{width:"20%"}}>
+          <div className="container_sidebar">
             <div className="container mt-2">
                 <Category  onCategorySelect={handleCategorySelect} />
                 <Apparels onApparelsSelect={handleApparelsSelect}/>
@@ -72,6 +73,7 @@ const SidebarShop = ({ handleFilterShop, applyFilter, clearFilter }) => {
                 <div className="btn btn-default"  onClick={() => clearFilter()}>Clear Filter</div>   
             </div>
         </div>
+      </div>
     )
 }
 

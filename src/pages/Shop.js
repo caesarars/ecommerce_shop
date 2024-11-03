@@ -125,7 +125,7 @@ const Shop = () => {
 
     // TO DO FUNCTIONS :  
     const clearFilter = () => {
-
+      setFilters({})
     }  
 
     const handleFilterShop = (filterData) => {
@@ -156,14 +156,20 @@ const Shop = () => {
                
                 <div className="d-flex flex-row">
                     {renderError()}
-                    <div style={{width:"20%"}}>
-                        <SidebarShop handleFilterShop={handleFilterShop} applyFilter={applyFilter} clearFilter={clearFilter}/>
-                    </div>
                     
-                    <ShopLoading loading={loading} />
-                    <div style={{width:"80%"}}>
-                        <ShopProducts error={error} loading={loading} data={data}/>
-                    </div>
+                    <SidebarShop 
+                      handleFilterShop={handleFilterShop} 
+                      applyFilter={applyFilter} 
+                      clearFilter={clearFilter}/>
+                    
+                    <ShopLoading 
+                      loading={loading} />
+
+                    <ShopProducts 
+                      error={error} 
+                      loading={loading} 
+                      data={data}/>
+
                 </div>
             </div>
             <Pagination currentPage={pagination.currentPage} totalPages={pagination.totalPages} totalItems={pagination.totalItems}/>

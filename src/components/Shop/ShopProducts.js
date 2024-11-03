@@ -4,7 +4,7 @@ import ProductItem from "../ProductItem/ProductItem";
 
 const ShopProducts = ({error, loading, data}) => {
     return (
-        <>
+        <div style={{width:"80%"}}>
             {!loading && !error && 
                     (
                         <div className="d-flex flex-wrap justify-content-between flex-wrap">
@@ -21,7 +21,7 @@ const ShopProducts = ({error, loading, data}) => {
                             ))}
                         </div>
                     )}
-        </>
+        </div>
     )
 }
 
