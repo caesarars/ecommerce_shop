@@ -1,3 +1,15 @@
 .greylight {
     color:#bdbdbd
 }
+
+.image-container {
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .image-container.next {
+    transform: translateX(-100%);
+  }
+  
+  .image-container.prev {
+    transform: translateX(100%);
+  }

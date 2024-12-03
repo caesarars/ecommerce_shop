@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
@@ -30,7 +30,14 @@ const Category = ({ onCategorySelect, clearFilter }) => {
         }
         return "p-2"
     }
-    
+
+    useEffect(() => {
+        if (clearFilter) {
+            onCategorySelect("")
+            setSelectedCategory("")
+        }
+    }, [clearFilter])
+
     return (
         <>
             <div

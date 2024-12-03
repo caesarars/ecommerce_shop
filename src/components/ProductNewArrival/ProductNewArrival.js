@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import "./ProductNewArrival.css"
 
 
-const ProductNewArrival = ({ id, name , fileUrl, price ,stock })=> {
+const ProductNewArrival = ({ id, name , fileUrl, price ,stock, animationDirection })=> {
     const navigate = useNavigate()
     return (
         <div>
-             <div className="d-flex flex-column container_image">
-                <img 
+             <div className={`d-flex flex-column container_image animate_show ${animationDirection}`}>
+                <img className=""
                     id="image_product" 
                     src={fileUrl}  
                     width="280px" 

@@ -5,6 +5,12 @@ import { useSelector } from 'react-redux';
 import axios from "axios";
 import SearchBox from "./SearchBox";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import Carts from "./Carts/Carts";
+
+
 const URL_LOGOUT = "http://localhost:3000/logout"  
 
 const Navbar = () => {
@@ -12,6 +18,8 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     const [ username, setUsername ] = useState("");
+    const [ totalCart , setTotalCart ] = useState(0)
+    const [ carts, setCarts ] = useState([])
 
     const [toggleProfile, setToggleProfile] = useState(false)
 
@@ -41,6 +49,14 @@ const Navbar = () => {
         console.log("check session")
         try {
             const response = await axios.get('http://localhost:3000/me', {withCredentials:true});
+
+            const responseCart = await axios.get("http://localhost:3000/cart", {withCredentials:true})
+
+            setTotalCart(responseCart.data.total)
+            setCarts(responseCart.data.carts)
+
+            console.log("Carts ," ,carts)
+
             console.log("session me : " , response)
             setUsername(response.data.name);
         } catch (err) {
@@ -72,12 +88,23 @@ const Navbar = () => {
                 <div style={{width:"120px"}} className="d-flex justify-content-end">
                 {username ? (
                                 <>
-                                    <p onClick={() => setToggleProfile(!toggleProfile)}>{username}</p>
+                                    <div onClick={() => setToggleProfile(!toggleProfile)} 
+                                        onMouseEnter={() => setToggleProfile(!toggleProfile) } 
+                                      
+                                        className="">
+                                        <FontAwesomeIcon icon={faUser} style={{width:"24px" ,height:"24px"}} />
+                                    </div>
+                                    <div className="container_cart">
+                                        <FontAwesomeIcon icon={faShoppingCart} style={{width:"24px" ,height:"24px"}} />
+                                        <span className="total_order">{totalCart}</span>
+                                        <Carts data={carts} />
+                                    </div>
                                     <div className="profile_menu" style={{ display: toggleProfile ? "block" : "none", textAlign:"center"}}>
                                         <div className="d-flex flex-column" style={{ height: "100%" }}>
-                                                <p className="menu_link">Profile</p>
-                                                <p className="menu_link" onClick={ () => navigate("/orders") }>Orders</p>
-                                                <p className="menu_link" onClick={() => logout()}style={{ marginTop: "auto" }}>Logout</p>
+                                                <p className="montserrat-normal" id="username">{username}</p>
+                                                <p className="menu_link montserrat-light">Profile</p>
+                                                <p className="menu_link montserrat-light" onClick={ () => navigate("/orders") }>Orders</p>
+                                                <p className="menu_link montserrat-light" onClick={() => logout()}style={{ marginTop: "auto" }}>Logout</p>
                                            </div>
                                     </div>
                                 </>

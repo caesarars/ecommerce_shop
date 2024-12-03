@@ -10,6 +10,8 @@ const SidebarShop = ({ handleFilterShop, applyFilter, clearFilter }) => {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [filter, setFilter] = useState({})
 
+    const [isClearedFilter , setIsClearedFilter ] = useState(false)
+
     const handleCategorySelect = (category) => {
         setSelectedCategory(category);
         console.log("Selected Category:", category);
@@ -61,16 +63,38 @@ const SidebarShop = ({ handleFilterShop, applyFilter, clearFilter }) => {
         });
       };
 
+      const clearingFilter = () => {
+        clearFilter({})
+        setIsClearedFilter(!isClearedFilter)
+      }
+
     return (
       <div style={{width:"20%"}}>
           <div className="container_sidebar">
             <div className="container mt-2">
-                <Category  onCategorySelect={handleCategorySelect} />
-                <Apparels onApparelsSelect={handleApparelsSelect}/>
-                <Price onPriceMinSelect={handleMinPrice} onPriceMaxSelect={handleMaxPrice}/>
-                <Size onSizeSelect={handleSelectSize}/>  
+
+                <Category  
+                  onCategorySelect={handleCategorySelect} 
+                  clearFilter={isClearedFilter} />
+
+                <Apparels 
+                  onApparelsSelect={handleApparelsSelect}
+                  clearFilter={isClearedFilter}
+                  />
+
+                <Size 
+                  onSizeSelect={handleSelectSize}
+                  clearFilter={isClearedFilter}
+                  />  
+
+<Price 
+                  onPriceMinSelect={handleMinPrice} 
+                  onPriceMaxSelect={handleMaxPrice}
+                  clearFilter={isClearedFilter}
+                  />  
+
                 <div className="btn btn-primary" onClick={() => applyFilter()}>Apply</div>   
-                <div className="btn btn-default"  onClick={() => clearFilter()}>Clear Filter</div>   
+                <div className="btn btn-default"  onClick={() => clearingFilter()}>Clear Filter</div>   
             </div>
         </div>
       </div>

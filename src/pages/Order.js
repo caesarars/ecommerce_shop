@@ -17,7 +17,7 @@ import ImageViewer from "../components/ImageViewer/ImageViewer";
 
 const Order = () => {
     const location = useLocation();
-    const { quantity, priceItem, imageUrl, productName} = location.state;
+    const { quantity, priceItem, imageUrl, productName, size} = location.state;
     const initPrice = priceItem
     const [ newQuantity, setNewQuantity ] = useState(quantity)
     const [ newPrice, setNewPrice ] = useState(priceItem)
@@ -64,7 +64,8 @@ const Order = () => {
                     product : productId,
                     quantity : newQuantity,
                     price : newPrice,
-                    imageUrl : imageUrl
+                    imageUrl : imageUrl,
+                    size : size
                 }
             ],
             totalAmount: newPrice + 10,

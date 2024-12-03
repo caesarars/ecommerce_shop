@@ -21,6 +21,7 @@ import Purchase from './pages/Purchase';
 import HistoryOrder from './pages/HistoryOrder';
 import Register from './pages/Register';
 import Shop from "./pages/Shop"
+import Sandbox from './pages/Sandbox';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -53,7 +54,11 @@ const router = createBrowserRouter([
   {
     path: "/shop",
     element : <Shop/>
-  }
+  },
+   {
+    path: "/sandbox",
+    element : <Sandbox />
+   }
  
 ]);
 

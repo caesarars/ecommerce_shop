@@ -125,7 +125,7 @@ const Shop = () => {
 
     // TO DO FUNCTIONS :  
     const clearFilter = () => {
-      setFilters({})
+      //setFilters({})
     }  
 
     const handleFilterShop = (filterData) => {
@@ -156,7 +156,7 @@ const Shop = () => {
                
                 <div className="d-flex flex-row">
                     {renderError()}
-                    
+
                     <SidebarShop 
                       handleFilterShop={handleFilterShop} 
                       applyFilter={applyFilter} 

@@ -1,0 +1,18 @@
+.carts_container {
+    position: relative;
+    z-index: 99;
+}
+
+.carts {
+    position: absolute;
+    left: -148px;
+    width: 320px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+}
+
+.product_name {
+    font-size: 14px;
+}

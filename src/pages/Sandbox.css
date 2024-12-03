@@ -1,0 +1,150 @@
+.box {
+    width: 100px;
+    height: 50px;
+    position: relative;
+    background-color: aquamarine;
+}
+
+.box2 {
+    background-color: cadetblue;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; /* Membuat elemen menjadi lingkaran */
+    position: absolute;
+    top: 50%; /* Posisikan elemen di tengah vertikal */
+    left: 50%; /* Posisikan elemen di tengah horizontal */
+    transform-origin: -100px 0; /* Tentukan pusat rotasi */
+    animation: rotateCircle 2s linear infinite; /* Animasi */
+}
+
+.box3 {
+    background-color: cadetblue;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; /* Membuat elemen menjadi lingkaran */
+    position: absolute;
+    top: 50%; /* Posisikan elemen di tengah vertikal */
+    left: 50%; /* Posisikan elemen di tengah horizontal */
+    transform-origin: -100px 0; /* Tentukan pusat rotasi */
+    animation: rotateCircle 2s linear infinite; /* Animasi */
+    animation-delay: 0.35s; 
+}
+
+.box4 {
+    background-color: cadetblue;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; /* Membuat elemen menjadi lingkaran */
+    position: absolute;
+    top: 50%; /* Posisikan elemen di tengah vertikal */
+    left: 50%; /* Posisikan elemen di tengah horizontal */
+    transform-origin: -100px 0; /* Tentukan pusat rotasi */
+    animation: rotateCircle 2s linear infinite; /* Animasi */
+    animation-delay: 0.5s; 
+}
+
+.box5 {
+    background-color: cadetblue;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; /* Membuat elemen menjadi lingkaran */
+    position: absolute;
+    top: 50%; /* Posisikan elemen di tengah vertikal */
+    left: 50%; /* Posisikan elemen di tengah horizontal */
+    transform-origin: -100px 0; /* Tentukan pusat rotasi */
+    animation: rotateCircle 2s linear infinite; /* Animasi */
+    animation-delay: 1s; 
+}
+
+.image {
+    width: 120px;
+    height: 120px;
+    background-color: blueviolet;
+    animation: moveLeft 0.5s linear;
+}
+
+@keyframes moveLeft {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-2000px);
+    }
+}
+
+/* Definisikan animasi dengan @keyframes */
+@keyframes moveRight {
+    0% {
+        left: 0; /* Posisi awal */
+    }
+
+    100% {
+        left: 120px; /* Bergerak ke kanan */
+    }
+}
+
+@keyframes moveForwardAndBack { 
+    0% {
+        left: 0; /* Posisi awal */
+    }
+
+    100% {
+        left: 120px; /* Bergerak ke kanan */
+    }
+}
+
+/* Terapkan animasi ke elemen */
+.box {
+    animation: moveForwardAndBack 1s ease-in-out infinite alternate;
+}
+
+/* Definisikan keyframes */
+@keyframes rotateCircle {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 50px auto;
+    overflow: hidden;
+}
+
+.carousel-images {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-image {
+    width: 25%; /* 4 gambar dalam satu baris */
+    height: auto;
+    object-fit: cover;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.carousel-button.prev {
+    left: 10px;
+}
+
+.carousel-button.next {
+    right: 10px;
+}
+

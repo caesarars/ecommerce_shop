@@ -10,6 +10,7 @@ import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
 import { faStarHalfAlt as halfStar } from '@fortawesome/free-solid-svg-icons'; // Import half-star
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import PopUp from "../PopUp/PopUp"
+import ProductImageDetail from "./ProductImageDetail";
 
 
 const Product = () => {
@@ -31,30 +32,41 @@ const Product = () => {
     const [ quantity , setQuantity ] = useState(1)
     const [ totalPrice, setTotalPrice] = useState(priceProduct)
     const [ toggleModal, setToggleModal ] = useState(false);
+    const [ listSizeProduct , setListSizeProduct ] = useState([])
 
     console.log("Product totalPrice : ", totalPrice)
+    const [selectedSize, setSelectedSize] = useState(null);
+
 
     const [ toggleOrderPage , setToggleOrderPage ] = useState(false)
 
     const handleChange = (e) => {
 
-        console.log("onchange value : " , e.target.value * priceProduct)
-        
+        let itemValue = e.target.value;
+        if (isNaN(itemValue)) {
+            itemValue = 0;
+        }
+        console.log("onchange value : " , itemValue * priceProduct)
+        console.log("target value ", e.target.value)
         setQuantity(parseInt(e.target.value))
+
         console.log("quantity , ", quantity)
         setTotalPrice(e.target.value * priceProduct) 
         console.log("total price , ", totalPrice)
+      
     }
 
     const getDetailProduct = async () => {
         const response = await axios.get(URL_GET_PRODCUT)
+        console.log("response get detail product " , response)
         setNameProduct(response.data.name)
         setDescProduct(response.data.description)
         setPriceProduct(response.data.price)
-        setStockProduct(response.data.stock)
+        setStockProduct(response.data.detail[0].stock)
         setImageUrl(response.data.imageUrl)
         setFeatures(response.data.features)
         setTotalPrice(response.data.price)
+        setListSizeProduct(response.data.detail)
         console.log("response detail ", response.data)
     }
 
@@ -62,8 +74,25 @@ const Product = () => {
         setToggleModal(true)
     }
 
+    const handleSizeProduct = (size) => {
+        setSelectedSize(size); 
+
+        const selectedSize = listSizeProduct.find(
+            (detail) => detail.size === size
+        );
+
+        console.log("selectedSize : " , selectedSize)
+
+        console.log("detail size product" , selectedSize)
+        setStockProduct(selectedSize.stock)
+    }
+
     const handleClose = () => {
         setToggleModal(false)
+    }
+
+    const handleSelectImage = (index) => {
+        setSelectedImageIndex(index)
     }
 
     const detailPage = () => {
@@ -71,19 +100,15 @@ const Product = () => {
             <div className="d-flex mt-5">
                 <div className="container_detail_left">
                     <div className="container_image d-flex">
-                        <img src={imageUrl[selectedImageIndex]} style={{width:"80%"}}/>
+                        <img src={imageUrl[selectedImageIndex]} style={{width:"80%"}} alt="main_image_product"/>
                     </div>
                     <div className="d-flex">
                         <div className="d-flex flex-row flex-start container_subimage">
-                            { imageUrl && imageUrl.map((image, index) => (
-                                <div style={{paddingRight:"8px", paddingTop:"8px"}}>
-                                    <img 
-                                        onClick={() => setSelectedImageIndex(index)} 
-                                        className={index === selectedImageIndex ? "opacity_image" : ""} 
-                                        src={image} 
-                                        style={{width:"64px"}}/>
-                                </div>
-                            )) }
+                            <ProductImageDetail 
+                                imageUrl={imageUrl} 
+                                setSelectedImageIndex={handleSelectImage} 
+                                selectedImageIndex={selectedImageIndex}
+                            />
                         </div>
                     </div>
                 </div>
@@ -103,13 +128,14 @@ const Product = () => {
                         ))} */}
                       
                         <div className="d-flex flex-column mt-2">
-                            <p style={{fontWeight:"bold", fontSize:"36px"}}>${priceProduct * quantity}</p>
+                            <p style={{fontWeight:"bold", fontSize:"36px"}}>${totalPrice}</p>
                             <div className="mb-4">
-                                <h3 className="montserrat-normal">Available Size</h3>
-                                <button className="btn btn-dark" style={{width:"48px", marginRight:"12px"}} onClick={ () => setToggleModal(true)}>S</button>
-                                <button className="btn btn-light" style={{width:"48px", marginRight:"12px"}}>M</button>
-                                <button className="btn btn-light" style={{width:"48px", marginRight:"12px"}}>L</button>
-                                <button className="btn btn-light" style={{width:"48px", marginRight:"12px"}}>XL</button>
+                                <p className="montserrat-light">Available Size</p>
+                                { listSizeProduct && listSizeProduct.map((data) => (
+                                    <button  className={`btn ${selectedSize === data.size ? 'btn-primary' : 'btn-light'}`} 
+                                    style={{width:"48px", marginRight:"12px"}} 
+                                    onClick={() => handleSizeProduct(data.size)}>{data.size}</button>
+                                ))}
                             </div>
                             <div className="d-flex flex-column">
 
@@ -117,7 +143,7 @@ const Product = () => {
                                 <span className="input-group-text">
                                     <FontAwesomeIcon icon={faMinus} />
                                 </span>
-                                <input className="form-control" style={{width:"10%"}}
+                                <input className="form-control w-25" 
                                     type="number"
                                     id="quantity"
                                     value={quantity}
@@ -130,6 +156,7 @@ const Product = () => {
                                     <FontAwesomeIcon icon={faPlus} />
                                 </span>
                             </div>
+
                             <p style={{fontStyle:"italic", opacity:"0.3"}}>Stock available {stockProduct}</p>
 
                             </div>
@@ -149,7 +176,8 @@ const Product = () => {
                                     productName : nameProduct,
                                     quantity: quantity,
                                     priceItem: totalPrice,
-                                    imageUrl: imageUrl[selectedImageIndex]
+                                    imageUrl: imageUrl[selectedImageIndex],
+                                    size: selectedSize
                                 }
                             })}>
                                 <span  className="montserrat-normal">Order</span>
