@@ -95,9 +95,9 @@ const Navbar = () => {
                                         <FontAwesomeIcon icon={faUser} style={{width:"24px" ,height:"24px"}} />
                                     </div>
                                     <div className="container_cart">
-                                        <FontAwesomeIcon icon={faShoppingCart} style={{width:"24px" ,height:"24px"}} />
+                                        <FontAwesomeIcon icon={faShoppingCart} style={{width:"24px" ,height:"24px"}} onClick={() => navigate("/cart")}/>
                                         <span className="total_order">{totalCart}</span>
-                                        <Carts data={carts} />
+                                        {/*<Carts data={carts} />*/}
                                     </div>
                                     <div className="profile_menu" style={{ display: toggleProfile ? "block" : "none", textAlign:"center"}}>
                                         <div className="d-flex flex-column" style={{ height: "100%" }}>

@@ -7,9 +7,12 @@ const Carts = ({data}) => {
         <div className="carts_container">
             <div className="carts">
                 {data.map((cart) => (
-                    <div>
-                        <img src={cart.imageProduct} width="96px"/>
-                        <span className="product_name">{cart.productName}</span>
+                    <div className="cart_items">
+                        <div className="d-flex justify-content-start align-items-start">
+                            <img src={cart.imageProduct} width="96px" alt="product_cart"/>
+                            <span className="product_name">{cart.productName}</span>
+                            <span>${cart.price}</span>
+                        </div>
                     </div>
                 ))}
             </div>
