@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
@@ -95,6 +96,20 @@ const Product = () => {
         setSelectedImageIndex(index)
     }
 
+    const addToCart = async () => {
+        const reqBody = {}
+        reqBody.userId = ""
+        reqBody.productId = ""
+        reqBody.productName = ""
+        reqBody.imageProduct = ""
+        reqBody.quantity = ""
+        reqBody.size = ""
+        reqBody.price = ""
+        reqBody.status = ""
+        
+    }
+    
+
     const detailPage = () => {
         return (
             <div className="d-flex mt-5">
@@ -169,7 +184,7 @@ const Product = () => {
                        
                        <div className="d-flex justify-content-between align-items-center mt-2">
                             <div className="btn btn-light width-30">
-                                <span className="montserrat-normal">Add to chart</span>
+                                <span className="montserrat-normal" onClick={addToCart}>Add to chart</span>
                             </div>
                             <div className="montserrat-normal btn btn-dark width-30" onClick={ () => navigate(`/order/${id}`, {
                                 state: {

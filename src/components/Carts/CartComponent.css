@@ -6,3 +6,9 @@
     border-radius: 8px;
     background-color: white;
 }
+
+.checkbox_cart {
+    margin-right: 16px;
+    height: 32px;
+    width: 32px;
+}
