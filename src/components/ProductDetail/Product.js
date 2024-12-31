@@ -6,7 +6,7 @@ import "./Product.css"
 import Order from "../../pages/Order";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faL, faPlus, faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
+import { faL, faPlus, faStar as solidStar, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
 import { faStarHalfAlt as halfStar } from '@fortawesome/free-solid-svg-icons'; // Import half-star
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
@@ -123,6 +123,19 @@ const Product = () => {
         //}
 //
     }
+
+    const addToCartPopUp = () => {
+        return (
+            <>
+                <div className="container">
+                    <div className="d-flex justify-content-center flex-column align-items-center">
+                        <p className="montserrat-light" style={{fontSize:"24px"}}>Success add to carts</p>
+                        <FontAwesomeIcon icon={faCheckCircle} color="green" size="3x"/>
+                    </div>
+                </div>
+            </>
+        )
+    }
     
 
     const detailPage = () => {
@@ -194,7 +207,7 @@ const Product = () => {
                         </div>
 
                         <PopUp show={toggleModal} handleClose={handleClose} >
-                            <h3>Detail</h3>
+                            {addToCartPopUp()}
                         </PopUp>
                        
                        <div className="d-flex justify-content-between align-items-center mt-2">
