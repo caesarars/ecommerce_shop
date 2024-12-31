@@ -23,6 +23,7 @@ import Register from './pages/Register';
 import Shop from "./pages/Shop"
 import Sandbox from './pages/Sandbox';
 import Carts from './pages/Carts/Carts';
+import { UserProvider } from './context/UserContext';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -71,10 +72,12 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
   <React.StrictMode>
+      <UserProvider>
       <Provider store={store}>
         <RouterProvider router={router}>
       </RouterProvider>
       </Provider>
+      </UserProvider>
   </React.StrictMode>
 
 );

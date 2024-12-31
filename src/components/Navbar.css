@@ -23,11 +23,15 @@
     position: absolute;
     background-color:#f8f8f8;
     padding: 8px;
-    top: 64px;
     border-radius: 8px;
     height: 20vh;
     width: 12%;
     z-index: 100;
+}
+
+.user_icon {
+    margin-left: 32px;
+    position: relative;
 }
 
 .menu_link:hover {

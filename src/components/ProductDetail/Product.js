@@ -12,9 +12,11 @@ import { faStarHalfAlt as halfStar } from '@fortawesome/free-solid-svg-icons'; /
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import PopUp from "../PopUp/PopUp"
 import ProductImageDetail from "./ProductImageDetail";
+import { useUserContext } from '../../context/UserContext'; // Adjust the path as necessary
 
 
 const Product = () => {
+    const { userId } = useUserContext(); // Access userId from context
 
     useEffect(() => {
         getDetailProduct();
@@ -23,8 +25,12 @@ const Product = () => {
     const { id } = useParams()
     const navigate = useNavigate();
     const URL_GET_PRODCUT = `http://localhost:3000/product/${id}` 
+    const URL_ADD_TO_CART = 'http://localhost:3000/cart/';
+
+
     const [selectedImageIndex, setSelectedImageIndex ]= useState(0)
     const [ nameProduct, setNameProduct ] = useState("")
+    const [ productId, setProductId ] = useState(null)
     const [ descProduct, setDescProduct ] = useState("")
     const [ priceProduct, setPriceProduct ] = useState(0)
     const [ stockProduct, setStockProduct ] = useState(0)
@@ -68,6 +74,7 @@ const Product = () => {
         setFeatures(response.data.features)
         setTotalPrice(response.data.price)
         setListSizeProduct(response.data.detail)
+        setProductId(response.data._id)
         console.log("response detail ", response.data)
     }
 
@@ -98,15 +105,23 @@ const Product = () => {
 
     const addToCart = async () => {
         const reqBody = {}
-        reqBody.userId = ""
-        reqBody.productId = ""
-        reqBody.productName = ""
-        reqBody.imageProduct = ""
-        reqBody.quantity = ""
-        reqBody.size = ""
-        reqBody.price = ""
-        reqBody.status = ""
-        
+        reqBody.userId = userId
+        reqBody.productId = productId
+        reqBody.productName = nameProduct
+        reqBody.imageProduct = imageUrl[0]
+        reqBody.quantity = quantity
+        reqBody.size = selectedSize
+        reqBody.price = priceProduct
+        reqBody.status = "active"
+        console.log(reqBody)
+        showModal(true)
+        //try {
+        //    const response = await axios.post(URL_ADD_TO_CART, reqBody , {withCredentials:true})
+        //    console.log(response)
+        //} catch (err) {
+        //    console.error(err)
+        //}
+//
     }
     
 

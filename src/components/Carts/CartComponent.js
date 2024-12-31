@@ -7,9 +7,12 @@ const CartComponent = (props) => {
 
     const checkboxRef = useRef(null);
 
-    const {productName, imageProduct, price, quantity, checkboxHandler, changeItemHandler} = props
+    const {productId, productName, imageProduct, price, quantity, checkboxHandler, changeItemHandler} = props
 
     const [ itemsTotal , setItemsTotal] = useState(quantity);
+
+    let product = {}
+    product.id = productId
 
     const handleDecreaseItem = () => {
        let quantity = itemsTotal - 1;
@@ -19,7 +22,8 @@ const CartComponent = (props) => {
         if (checkboxRef.current) {
             const isChecked = checkboxRef.current.checked;
             if (isChecked) {
-                changeItemHandler(price *  quantity)
+                product.price = price * quantity
+                changeItemHandler(product)
             }
           }
        }
@@ -28,28 +32,32 @@ const CartComponent = (props) => {
     const handleIncreaseItem = () => {
         let quantity = itemsTotal + 1;
         setItemsTotal(quantity);
-
         if (checkboxRef.current) {
             const isChecked = checkboxRef.current.checked;
             if (isChecked) {
-                changeItemHandler(price *  quantity)
+                product.price = price * quantity
+                changeItemHandler(product)
             }
           }
     }
 
     const handleCheckbox = (e) => {
+
+        const isChecked = e.target.checked
+        console.log("is checked : " , isChecked)
         if (e.target.checked) {
-            checkboxHandler(price *  itemsTotal)
-
+            const priceProduct = price * itemsTotal;
+            product.price = priceProduct
+            checkboxHandler(product,e.target.checked)
         } else {
-            checkboxHandler(( price *  itemsTotal) * -1 )
+            const priceProduct = ( price *  itemsTotal ) * -1 ;
+            product.price = priceProduct
+            checkboxHandler(product, e.target.checked)
         }
-
     }
 
-
     return (
-        <div className="container-cart d-flex mb-5 align-items-center p-3">
+        <div className="container-cart d-flex align-items-center p-3">
             <input type="checkbox" ref={checkboxRef} className="checkbox_cart" onChange={handleCheckbox}/>
             <img className="image_cart" src={imageProduct} alt={productName} width="160px"/>
             <div className="d-flex flex-column w-100 p-5">
@@ -59,12 +67,12 @@ const CartComponent = (props) => {
             <div className="d-flex justify-content-end w-100 p-5">
                 <div className="d-flex flex-row align-items-center justify-content-end">
                     <FontAwesomeIcon icon={faMinus} onClick={handleDecreaseItem}/>
-                    <input style={{width:"64px"}} className=" m-2 form-control text-center" type="number" value={itemsTotal} disabled/>
+                <span className="montserrat-normal" style={{width:"36px", textAlign:"center", backgroundColor:"#edb203" , color:"black", borderRadius:"6px",  margin:"8px"}}>{itemsTotal}</span>
                     <FontAwesomeIcon icon={faPlus} onClick={handleIncreaseItem} />
                 </div>
-            </div>
-            <div className="">
-                <FontAwesomeIcon icon={faTrash} onClick={handleDecreaseItem}/>
+                <div className="d-flex justify-content-center w-25 align-items-center">
+                    <FontAwesomeIcon icon={faTrash} onClick={handleDecreaseItem}/>
+                </div>
             </div>
         </div>
     )

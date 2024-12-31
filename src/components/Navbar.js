@@ -10,12 +10,15 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import Carts from "./Carts/Carts";
 
+import { useUserContext } from "../context/UserContext";
+
 
 const URL_LOGOUT = "http://localhost:3000/logout"  
 
 const Navbar = () => {
     const email = useSelector((state) => state.user.email)
     const navigate = useNavigate();
+    const { setUserId } = useUserContext(); // Get the setUserId function from context
 
     const [ username, setUsername ] = useState("");
     const [ totalCart , setTotalCart ] = useState(0)
@@ -35,6 +38,7 @@ const Navbar = () => {
             if (response.status === 200) {
                 console.log("success logout")
                 setUsername(null)
+                setUserId(null); // Clear userId on logout
                 navigate("/")
             }
     
@@ -49,23 +53,21 @@ const Navbar = () => {
         console.log("check session")
         try {
             const response = await axios.get('http://localhost:3000/me', {withCredentials:true});
-
             const responseCart = await axios.get("http://localhost:3000/cart", {withCredentials:true})
-
             setTotalCart(responseCart.data.total)
             setCarts(responseCart.data.carts)
-
             console.log("Carts ," ,carts)
-
             console.log("session me : " , response)
             setUsername(response.data.name);
+            setUserId(response.data.id); // Set userId from response
         } catch (err) {
             setUsername(null);  // No active session
+            setUserId(null); // Clear userId if no session
         } 
     };
 
     checkSession();
-    }, [])
+    }, [setUserId])
     
     const handleEnterButton = () => {
 
@@ -88,24 +90,25 @@ const Navbar = () => {
                 <div style={{width:"120px"}} className="d-flex justify-content-end">
                 {username ? (
                                 <>
-                                    <div onClick={() => setToggleProfile(!toggleProfile)} 
-                                        onMouseEnter={() => setToggleProfile(!toggleProfile) } 
-                                      
-                                        className="">
-                                        <FontAwesomeIcon icon={faUser} style={{width:"24px" ,height:"24px"}} />
-                                    </div>
                                     <div className="container_cart">
                                         <FontAwesomeIcon icon={faShoppingCart} style={{width:"24px" ,height:"24px"}} onClick={() => navigate("/cart")}/>
                                         <span className="total_order">{totalCart}</span>
                                         {/*<Carts data={carts} />*/}
                                     </div>
-                                    <div className="profile_menu" style={{ display: toggleProfile ? "block" : "none", textAlign:"center"}}>
-                                        <div className="d-flex flex-column" style={{ height: "100%" }}>
-                                                <p className="montserrat-normal" id="username">{username}</p>
-                                                <p className="menu_link montserrat-light">Profile</p>
-                                                <p className="menu_link montserrat-light" onClick={ () => navigate("/orders") }>Orders</p>
-                                                <p className="menu_link montserrat-light" onClick={() => logout()}style={{ marginTop: "auto" }}>Logout</p>
-                                           </div>
+                                    <div  className=""
+                                        onMouseEnter={() => setToggleProfile(!toggleProfile) } 
+                                            onMouseLeave={() => setToggleProfile(!toggleProfile)}>
+                                        <div className="user_icon">
+                                            <FontAwesomeIcon icon={faUser} style={{width:"24px" ,height:"24px"}} />
+                                        </div>
+                                        <div className="profile_menu" style={{ display: toggleProfile ? "block" : "none", textAlign:"center"}}>
+                                            <div className="d-flex flex-column" style={{ height: "100%" }}>
+                                                    <p className="montserrat-normal" id="username">{username}</p>
+                                                    <p className="menu_link montserrat-light">Profile</p>
+                                                    <p className="menu_link montserrat-light" onClick={ () => navigate("/orders") }>Orders</p>
+                                                    <p className="menu_link montserrat-light" onClick={() => logout()}style={{ marginTop: "auto" }}>Logout</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </>
                             ) :
