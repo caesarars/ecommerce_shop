@@ -6,6 +6,7 @@ import useFetch from "../../api/getCarts"
 import "./Carts.css"
 import CartComponent from "../../components/Carts/CartComponent";
 import SideBarCart from "./SideBarCart";
+import { DELETE_CART } from "../../api/cartAPIs";
 
 const Carts = () => {
     const [ totalPrice, setTotalPrice ] = useState(0)
@@ -79,6 +80,7 @@ const Carts = () => {
                                             changeItemHandler = {changeItemHandler}
                                             checkboxHandler={handleCartCheckbox}
                                             price={cart.price} 
+                                            size={cart.size}
                                             quantity={cart.quantity}
                                             imageProduct={cart.imageProduct} 
                                             productName={cart.productName } />

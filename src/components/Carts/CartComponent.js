@@ -2,14 +2,21 @@ import React, { useState, useRef } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import "./CartComponent.css"
+import { DELETE_CART } from "../../api/cartAPIs";
+import axios from "axios";
+import PopUp from "../PopUp/PopUp"
+
 
 const CartComponent = (props) => {
 
     const checkboxRef = useRef(null);
 
-    const {productId, productName, imageProduct, price, quantity, checkboxHandler, changeItemHandler} = props
+    const {productId, productName, imageProduct, price, quantity, checkboxHandler, changeItemHandler, size} = props
 
     const [ itemsTotal , setItemsTotal] = useState(quantity);
+
+    const [ toggleModal, setToggleModal ] = useState(false);
+
 
     let product = {}
     product.id = productId
@@ -56,12 +63,34 @@ const CartComponent = (props) => {
         }
     }
 
+    const deleteCart = async () => {
+        try {
+            const API_URL = DELETE_CART + "/" + productId
+            const responseDelete = await axios.delete(API_URL,{withCredentials:true})
+
+            if ( responseDelete ) {
+                setToggleModal(true)
+            }
+
+        } catch(err) {
+            
+        }
+    }
+
+    const handleClose = () => {
+        setToggleModal(false)
+    }
+
     return (
-        <div className="container-cart d-flex align-items-center p-3">
+        <>
+            <PopUp show={toggleModal} handleClose={handleClose} >
+                <p>Success delete cart</p>
+            </PopUp>
+            <div className="container-cart d-flex align-items-center p-3">
             <input type="checkbox" ref={checkboxRef} className="checkbox_cart" onChange={handleCheckbox}/>
             <img className="image_cart" src={imageProduct} alt={productName} width="160px"/>
             <div className="d-flex flex-column w-100 p-5">
-                <p className="montserrat-light">{productName}</p>
+                <p className="montserrat-light">{productName} - {size}</p>
                 <p className="montserrat-normal">${price}</p>
             </div>
             <div className="d-flex justify-content-end w-100 p-5">
@@ -71,10 +100,12 @@ const CartComponent = (props) => {
                     <FontAwesomeIcon icon={faPlus} onClick={handleIncreaseItem} />
                 </div>
                 <div className="d-flex justify-content-center w-25 align-items-center">
-                    <FontAwesomeIcon icon={faTrash} onClick={handleDecreaseItem}/>
+                    <FontAwesomeIcon icon={faTrash} onClick={deleteCart}/>
                 </div>
             </div>
         </div>
+        </>
+       
     )
 }
 

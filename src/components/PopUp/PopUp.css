@@ -5,10 +5,13 @@
     background-color: black;
     left: 0;
     top: 0;
-    opacity: 0.9;
+    opacity: 0.2;
     z-index: 100;
 }
 
 .content-popup {
     opacity: 1;
+    top: 30%;
+    border: none;
+    width: 25%;
 }

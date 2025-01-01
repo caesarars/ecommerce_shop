@@ -113,24 +113,27 @@ const Product = () => {
         reqBody.size = selectedSize
         reqBody.price = priceProduct
         reqBody.status = "active"
-        console.log(reqBody)
-        showModal(true)
-        //try {
-        //    const response = await axios.post(URL_ADD_TO_CART, reqBody , {withCredentials:true})
-        //    console.log(response)
-        //} catch (err) {
-        //    console.error(err)
-        //}
+       
+        try {
+            const response = await axios.post(URL_ADD_TO_CART, reqBody , {withCredentials:true})
+            if (response.data) {
+                showModal(true)
+                window.location.reload();
+                console.log(response)
+            }
+        } catch (err) {
+            console.error(err)
+        }
 //
     }
 
     const addToCartPopUp = () => {
         return (
             <>
-                <div className="container">
+                <div className="container" style={{border:"1px solid white"}}>
                     <div className="d-flex justify-content-center flex-column align-items-center">
-                        <p className="montserrat-light" style={{fontSize:"24px"}}>Success add to carts</p>
-                        <FontAwesomeIcon icon={faCheckCircle} color="green" size="3x"/>
+                        <FontAwesomeIcon icon={faCheckCircle} color="green" size="2x"/>
+                        <p className="montserrat-light" style={{fontSize:"16px" , margin:"8px"}}>added to carts</p>
                     </div>
                 </div>
             </>
@@ -211,8 +214,8 @@ const Product = () => {
                         </PopUp>
                        
                        <div className="d-flex justify-content-between align-items-center mt-2">
-                            <div className="btn btn-light width-30">
-                                <span className="montserrat-normal" onClick={addToCart}>Add to chart</span>
+                            <div className="btn btn-light width-30"  onClick={addToCart}>
+                                <span className="montserrat-normal">Add to chart</span>
                             </div>
                             <div className="montserrat-normal btn btn-dark width-30" onClick={ () => navigate(`/order/${id}`, {
                                 state: {
