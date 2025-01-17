@@ -65,6 +65,7 @@ const SidebarShop = ({ handleFilterShop, applyFilter, clearFilter }) => {
 
       const clearingFilter = () => {
         clearFilter({})
+        window.location.reload()
         setIsClearedFilter(!isClearedFilter)
       }
 
@@ -77,24 +78,19 @@ const SidebarShop = ({ handleFilterShop, applyFilter, clearFilter }) => {
                   onCategorySelect={handleCategorySelect} 
                   clearFilter={isClearedFilter} />
 
-                <Apparels 
-                  onApparelsSelect={handleApparelsSelect}
-                  clearFilter={isClearedFilter}
-                  />
-
                 <Size 
                   onSizeSelect={handleSelectSize}
                   clearFilter={isClearedFilter}
                   />  
 
-<Price 
+                <Price 
                   onPriceMinSelect={handleMinPrice} 
                   onPriceMaxSelect={handleMaxPrice}
                   clearFilter={isClearedFilter}
                   />  
 
-                <div className="btn btn-primary" onClick={() => applyFilter()}>Apply</div>   
-                <div className="btn btn-default"  onClick={() => clearingFilter()}>Clear Filter</div>   
+                <div className="btn btn-primary mt-5" onClick={() => applyFilter()}>Apply</div>   
+                <div className="btn btn-default mt-5"  onClick={() => clearingFilter()}>Clear Filter</div>   
             </div>
         </div>
       </div>

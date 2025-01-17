@@ -11,6 +11,7 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import Carts from "./Carts/Carts";
 
 import { useUserContext } from "../context/UserContext";
+import { useCartContext } from "../context/CartContext";
 
 
 const URL_LOGOUT = "http://localhost:3000/logout"  
@@ -19,9 +20,8 @@ const Navbar = () => {
     const email = useSelector((state) => state.user.email)
     const navigate = useNavigate();
     const { setUserId } = useUserContext(); // Get the setUserId function from context
-
+    const { listOfCart , setListOfCart } = useCartContext();
     const [ username, setUsername ] = useState("");
-    const [ totalCart , setTotalCart ] = useState(0)
     const [ carts, setCarts ] = useState([])
 
     const [toggleProfile, setToggleProfile] = useState(false)
@@ -54,9 +54,7 @@ const Navbar = () => {
         try {
             const response = await axios.get('http://localhost:3000/me', {withCredentials:true});
             const responseCart = await axios.get("http://localhost:3000/cart", {withCredentials:true})
-            setTotalCart(responseCart.data.total)
-            setCarts(responseCart.data.carts)
-            console.log("Carts ," ,carts)
+            setListOfCart(responseCart.data.carts)
             console.log("session me : " , response)
             setUsername(response.data.name);
             setUserId(response.data.id); // Set userId from response
@@ -78,7 +76,7 @@ const Navbar = () => {
     }
 
     return (
-        <div class=" montserrat-normal pt-3">
+        <div class=" montserrat-normal pt-3" >
             <div className="container d-flex flex-row align-items-center justify-content-between">
                 <span onClick={ () => navigate("/") } className="mainColor ecommerceName" style={{fontSize:"36px"}}>Ars Empire</span>
                 <div className="d-flex justify-content-between align-items-center">
@@ -92,7 +90,9 @@ const Navbar = () => {
                                 <>
                                     <div className="container_cart">
                                         <FontAwesomeIcon icon={faShoppingCart} style={{width:"24px" ,height:"24px"}} onClick={() => navigate("/cart")}/>
-                                        <span className="total_order">{totalCart}</span>
+                                        {
+                                            listOfCart && <span className="total_order">{listOfCart.length}</span>
+                                        }
                                         {/*<Carts data={carts} />*/}
                                     </div>
                                     <div  className=""

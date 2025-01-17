@@ -13,7 +13,7 @@ import ShopProducts from "../components/Shop/ShopProducts";
 import ShopLoading from "../components/Shop/ShopLoading";
 import axios from "axios";
 import Pagination from "../components/Pagination/Pagination";
-
+import "./Shop.css"
 
 // Your API call function
 const fetchData = async (url) => {
@@ -135,7 +135,7 @@ const Shop = () => {
     return (
         <>
             <Navbar />
-            <div className="container" style={{height :''}}>
+            <div className="container height80" style={{height :''}}>
                 <div className="mt-5"></div>
                 <div className="" style={{marginLeft:"190px",marginBottom:"8px" , padding:"16px"}}>
                     <div className="d-flex justify-content-between align-items-center flex-wrap"> 
@@ -171,8 +171,9 @@ const Shop = () => {
                       data={data}/>
 
                 </div>
+                <Pagination currentPage={pagination.currentPage} totalPages={pagination.totalPages} totalItems={pagination.totalItems}/>
+
             </div>
-            <Pagination currentPage={pagination.currentPage} totalPages={pagination.totalPages} totalItems={pagination.totalItems}/>
             <Footer />
         </>
     );

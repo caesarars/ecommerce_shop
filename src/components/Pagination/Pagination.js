@@ -8,7 +8,7 @@ const Pagination = ({currentPage, totalPages, totalItems}) => {
 
     return (
         <>
-            <div className="container">
+            <div className="container mt-5">
                 <div className="d-flex justify-content-center">
                     <span className="btn btn-default montserrat-normal">Prev</span>
 

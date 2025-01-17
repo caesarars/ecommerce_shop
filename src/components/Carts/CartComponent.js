@@ -1,15 +1,17 @@
 import React, { useState, useRef } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faMinus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faMinus, faTrash , faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 import "./CartComponent.css"
 import { DELETE_CART } from "../../api/cartAPIs";
 import axios from "axios";
 import PopUp from "../PopUp/PopUp"
-
+import { useCartContext } from "../../context/CartContext";
 
 const CartComponent = (props) => {
 
     const checkboxRef = useRef(null);
+
+    const { setListOfCart } = useCartContext();
 
     const {productId, productName, imageProduct, price, quantity, checkboxHandler, changeItemHandler, size} = props
 
@@ -67,8 +69,9 @@ const CartComponent = (props) => {
         try {
             const API_URL = DELETE_CART + "/" + productId
             const responseDelete = await axios.delete(API_URL,{withCredentials:true})
-
+            //setToggleModal(true)
             if ( responseDelete ) {
+                getCart()
                 setToggleModal(true)
             }
 
@@ -77,14 +80,36 @@ const CartComponent = (props) => {
         }
     }
 
+    const getCart = async () => {
+        try {
+            const responseCart = await axios.get("http://localhost:3000/cart", {withCredentials:true})
+            setListOfCart(responseCart.data.carts)
+        } catch (err) {
+
+        }
+    }
+
     const handleClose = () => {
         setToggleModal(false)
+    }
+
+    const popUpSuccess = () => {
+        return (
+            <>
+                <div className="container" style={{border:"1px solid white"}}>
+                    <div className="d-flex justify-content-center flex-column align-items-center">
+                        <FontAwesomeIcon icon={faCheckCircle} color="green" size="2x"/>
+                        <p className="montserrat-light" style={{fontSize:"16px" , margin:"8px"}}>deleted cart</p>
+                    </div>
+                </div>
+            </>
+        )
     }
 
     return (
         <>
             <PopUp show={toggleModal} handleClose={handleClose} >
-                <p>Success delete cart</p>
+                {popUpSuccess()}
             </PopUp>
             <div className="container-cart d-flex align-items-center p-3">
             <input type="checkbox" ref={checkboxRef} className="checkbox_cart" onChange={handleCheckbox}/>

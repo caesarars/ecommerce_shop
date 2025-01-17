@@ -1,6 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const SideBarCart = ({totalPrice}) => {
+    const navigate = useNavigate();
+
+
+    const navigateCheckout = () => {
+        navigate('/cart/checkout')
+    }
+
     return (
         <>
             <div className="sidebar_cart">
@@ -14,7 +22,7 @@ const SideBarCart = ({totalPrice}) => {
                         <input className="form-control" type="text" placeholder="Redeem Voucher Here"/>
                     </div>
                     <hr/>
-                    <button className="btn btn-success w-100">Checkout</button>
+                    <button className="btn btn-success w-100" onClick={navigateCheckout}>Checkout</button>
                 </div>
             </div>
         </>

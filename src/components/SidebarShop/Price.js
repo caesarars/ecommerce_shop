@@ -55,7 +55,7 @@ const Price = ({onPriceMinSelect , onPriceMaxSelect}) => {
                         onChange={handleOnChangeMinPrice}
                         id="customRangeMin"
                         min="1"
-                        max="2000"
+                        max="100"
                     />
                     <PriceInput
                         label="Max"
@@ -63,7 +63,7 @@ const Price = ({onPriceMinSelect , onPriceMaxSelect}) => {
                         onChange={handleOnChangeMaxPrice}
                         id="customRangeMax"
                         min="1"
-                        max="2000"
+                        max="100"
                     />
                 </div>
             )}
