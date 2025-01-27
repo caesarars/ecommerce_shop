@@ -7,14 +7,16 @@ const useFetch = (url) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const token = localStorage.getItem("token");
     const { setListOfCart } = useCartContext()
 
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(url, {withCredentials:true});
+                const response = await axios.get(url, {withCredentials:true, headers: {
+                    Authorization: `Bearer ${token}`,
+                  }});
 
                 if (response && response.data && response.data.carts) {
 

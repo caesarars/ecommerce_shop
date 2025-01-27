@@ -6,7 +6,7 @@ const ProductImageDetail = ({imageUrl, setSelectedImageIndex, selectedImageIndex
 
             { imageUrl && imageUrl.map((image, index) => (
                                 <div style={{paddingRight:"8px", paddingTop:"8px"}}>
-                                    <img 
+                                    <img alt="product detail"
                                         onClick={() => setSelectedImageIndex(index)} 
                                         className={index === selectedImageIndex ? "opacity_image" : ""} 
                                         src={image} 

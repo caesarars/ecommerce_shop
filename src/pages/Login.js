@@ -15,10 +15,11 @@ import { API_URLS } from "../api/apiURLs";
 import { setUser } from '../userSlice';  // Import the setUser action
 import { useDispatch } from 'react-redux';
 
+axios.defaults.withCredentials = true; // Set this globally if all requests use it
 
 const Login = () => {
     const URL_LOGIN = API_URLS.LOGIN;
-
+    console.log("url login : " , URL_LOGIN)
     const [email, setEmail] = useState(""); // State to store username
     const [password, setPassword] = useState(""); // State to store password
     const [errorMessage, setErrorMessage] = useState("")
@@ -65,12 +66,12 @@ const Login = () => {
             }, { withCredentials: true })
 
             if (response.status === 200 ) {
-                console.log(response)
+                localStorage.setItem("token", response.data.token);
                 setSuccessLogin(true)
                 dispatch(setUser(
                     {
-                        email:response.data.user.email,
-                        username : response.data.user.name
+                        email:response.data.email,
+                        username : response.data.name
                     }
                 ))
                 

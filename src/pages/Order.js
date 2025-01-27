@@ -13,7 +13,7 @@ import ProgressBar from "../components/ProgressBar/ProgressBar";
 import PaymentSuccessModal from "../components/Modal/PaymentSuccessModel";
 import GooglePayButton from '@google-pay/button-react';
 import ImageViewer from "../components/ImageViewer/ImageViewer";
-
+import { API_URLS } from "../api/apiURLs";
 
 const Order = () => {
     const location = useLocation();
@@ -53,7 +53,7 @@ const Order = () => {
 
     const navigate = useNavigate()
 
-    const URL_ORDER_PRODUCT = `http://localhost:3000/order`
+    const URL_ORDER_PRODUCT = API_URLS.ORDER
 
     const postOrder = async (paymentMethod) => {
        console.log("postOrder : ", billingInfos)

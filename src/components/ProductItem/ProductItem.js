@@ -9,7 +9,7 @@ const ProductItem = ({ id, name , fileUrl, price ,stock }) => {
     return (
         <div className="container container_product mb-5">
             <div className="d-flex flex-column">
-                <img id="image_product" src={fileUrl}  width="300px" height="320px" onClick={() => navigate(`/product/${id}`)}/>
+                <img  alt="product_item" id="image_product" src={fileUrl}  width="300px" height="320px" onClick={() => navigate(`/product/${id}`)}/>
                 <span className="montserrat-light" style={{fontSize:"1.1em"}}>{name}</span>
                 <div className="d-flex flex-column">
                     <span className="montserrat-normal" style={{fontSize:"1.2em"}}>

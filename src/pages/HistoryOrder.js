@@ -4,10 +4,11 @@ import axios from "axios";
 import ImageViewer from "../components/ImageViewer/ImageViewer";
 import moment from "moment";
 import "./HistoryOrder.css"
+import { API_URLS } from "../api/apiURLs";
 
 const HistoryOrder = () => {
     const [ historyData, setHistoryData ] = useState([])
-    const URL_GET_HISTORY = "http://localhost:3000/orders";
+    const URL_GET_HISTORY = API_URLS.ORDER;
 
 
     const formattedDate = (val) => {

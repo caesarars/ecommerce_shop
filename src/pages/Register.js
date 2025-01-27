@@ -9,6 +9,7 @@ import model1 from "../static/model1.png"
 import model2 from "../static/model2.png"
 import model3 from "../static/model3.png"
 import model4 from "../static/model4.png"
+import { API_URLS } from "../api/apiURLs";
 
 import RegisterModal from "../components/Modal/RegisterModal";
 
@@ -35,7 +36,7 @@ const Register = () => {
         return () => clearInterval(intervalId);
       }, [modelImage.length]);
 
-    const URL_REGISTER_USER = "http://localhost:3000/user"
+    const URL_REGISTER_USER = API_URLS.ME
 
     const [formData, setFormData] = useState({
         name: '',

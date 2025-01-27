@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
-import { useNavigate } from "react-router-dom";
+import { API_URLS } from "../api/apiURLs";
 
 const Purchase = () => {
 
@@ -11,8 +11,9 @@ const Purchase = () => {
     const [ productName , setProductName ] = useState("")
     const [ product, setProduct ] = useState({})
 
+
     const { id } = useParams()
-    const URL_GET_PURHCASE = `http://localhost:3000/order/${id}` 
+    const URL_GET_PURHCASE = `${API_URLS.ORDER}/${id}` 
 
     const getPurchase = async () => {
         try {
@@ -27,7 +28,7 @@ const Purchase = () => {
                 setProduct(responseData.product)
 
                 const product = responseData.products[0].product
-                const URL_GET_PRODCUT = `http://localhost:3000/product/${product}` 
+                const URL_GET_PRODCUT = `${API_URLS.GET_PRODUCTS}/${product}` 
                 await getProductDetail(URL_GET_PRODCUT)
             }
 

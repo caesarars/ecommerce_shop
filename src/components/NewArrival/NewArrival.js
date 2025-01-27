@@ -1,16 +1,14 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-import ProductItem from "../ProductItem/ProductItem";
-import ProductNewArrival from "../ProductNewArrival/ProductNewArrival"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ImageCarousel from "./ImageCarousel";
 import "./NewArrival.css"
-
+import { API_URLS } from "../../api/apiURLs";
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 
 const NewArrival = () => {
-    const URL_GET_PRODCUTS = "http://localhost:3000/product"  
+    const URL_GET_PRODCUTS = API_URLS.CARTS;
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [animationDirection , setAnimationDirection] = useState("next");

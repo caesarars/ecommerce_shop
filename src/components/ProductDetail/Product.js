@@ -3,16 +3,15 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import "./Product.css"
-import Order from "../../pages/Order";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faL, faPlus, faStar as solidStar, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
+import { faPlus, faStar as solidStar, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { faStarHalfAlt as halfStar } from '@fortawesome/free-solid-svg-icons'; // Import half-star
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import PopUp from "../PopUp/PopUp"
 import ProductImageDetail from "./ProductImageDetail";
-import { useUserContext } from '../../context/UserContext'; // Adjust the path as necessary
+import { useUserContext } from '../../context/UserContext';
+import { API_URLS } from "../../api/apiURLs"; // Adjust the path as necessary
 
 
 const Product = () => {
@@ -24,8 +23,8 @@ const Product = () => {
 
     const { id } = useParams()
     const navigate = useNavigate();
-    const URL_GET_PRODCUT = `http://localhost:3000/product/${id}` 
-    const URL_ADD_TO_CART = 'http://localhost:3000/cart/';
+    const URL_GET_PRODCUT = `${API_URLS.GET_PRODUCTS}/${id}` 
+    const URL_ADD_TO_CART =  API_URLS.CARTS;
 
 
     const [selectedImageIndex, setSelectedImageIndex ]= useState(0)

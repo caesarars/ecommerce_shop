@@ -36,7 +36,7 @@ const Category = ({ onCategorySelect, clearFilter }) => {
             onCategorySelect("")
             setSelectedCategory("")
         }
-    }, [clearFilter])
+    }, [onCategorySelect , setSelectedCategory, clearFilter])
 
     return (
         <>

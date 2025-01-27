@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import axios from "axios";
 import SearchBox from "./SearchBox";
-
+import { API_URLS } from "../api/apiURLs";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
@@ -13,8 +13,6 @@ import Carts from "./Carts/Carts";
 import { useUserContext } from "../context/UserContext";
 import { useCartContext } from "../context/CartContext";
 
-
-const URL_LOGOUT = "http://localhost:3000/logout"  
 
 const Navbar = () => {
     const email = useSelector((state) => state.user.email)
@@ -32,7 +30,7 @@ const Navbar = () => {
 
     const logout = async () => {
         try {
-            const response = await axios.post(URL_LOGOUT, {} , {withCredentials:true})
+            const response = await axios.post(API_URLS.LOGOUT, {} , {withCredentials:true})
             console.log(response)
 
             if (response.status === 200) {
@@ -51,21 +49,27 @@ const Navbar = () => {
        // Check if the session exists
        const checkSession = async () => {
         console.log("check session")
-        try {
-            const response = await axios.get('http://localhost:3000/me', {withCredentials:true});
-            const responseCart = await axios.get("http://localhost:3000/cart", {withCredentials:true})
-            setListOfCart(responseCart.data.carts)
-            console.log("session me : " , response)
-            setUsername(response.data.name);
-            setUserId(response.data.id); // Set userId from response
-        } catch (err) {
-            setUsername(null);  // No active session
-            setUserId(null); // Clear userId if no session
-        } 
+            const token = localStorage.getItem("token");
+            const response = await axios.get(API_URLS.ME, {withCredentials:true,headers: {
+                Authorization: `Bearer ${token}`,
+              }});
+            const responseCart = await axios.get(API_URLS.CARTS, {withCredentials:true, headers: {
+                Authorization: `Bearer ${token}`,
+              }})
+
+              if (response.data) {
+                setUsername(response.data.name);
+                setUserId(response.data.id); // Set userId from response
+              }
+
+              if (responseCart.data) {
+                  setListOfCart(responseCart.data.carts)
+              }
+        
     };
 
     checkSession();
-    }, [setUserId])
+    }, [])
     
     const handleEnterButton = () => {
 
@@ -86,7 +90,7 @@ const Navbar = () => {
                     <SearchBox  style={{width:"300px"}} onEnterButton={() => handleEnterButton()}  onSeachValue = {(val) => {handleSeachValue(val)}}/>
                 </div>
                 <div style={{width:"120px"}} className="d-flex justify-content-end">
-                {username ? (
+                {username !== null ? (
                                 <>
                                     <div className="container_cart">
                                         <FontAwesomeIcon icon={faShoppingCart} style={{width:"24px" ,height:"24px"}} onClick={() => navigate("/cart")}/>

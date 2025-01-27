@@ -1,7 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import "./PopUp.css"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 
 const PopUp = ({ show, handleClose, orderId, children }) => {

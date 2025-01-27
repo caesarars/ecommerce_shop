@@ -4,6 +4,7 @@ import { faPlus, faMinus, faTrash , faCheckCircle} from '@fortawesome/free-solid
 import "./CartComponent.css"
 import { DELETE_CART } from "../../api/cartAPIs";
 import axios from "axios";
+import { API_URLS } from "../../api/apiURLs";
 import PopUp from "../PopUp/PopUp"
 import { useCartContext } from "../../context/CartContext";
 
@@ -82,7 +83,7 @@ const CartComponent = (props) => {
 
     const getCart = async () => {
         try {
-            const responseCart = await axios.get("http://localhost:3000/cart", {withCredentials:true})
+            const responseCart = await axios.get(API_URLS.CARTS, {withCredentials:true})
             setListOfCart(responseCart.data.carts)
         } catch (err) {
 

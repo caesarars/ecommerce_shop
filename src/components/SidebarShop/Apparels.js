@@ -14,7 +14,6 @@ const APPARELS = [
 const Apparels = ({ onApparelsSelect }) => {
     const [isApparelsOpen, setIsApparelsOpen] = useState(false);
     const [selectedApparel, setSelectedApparel] = useState("");
-    const [ toggleApparel, setToggleApparel ] = useState("");
 
     // Toggle apparels list visibility
     const toggleApparelsVisibility = () => setIsApparelsOpen(prev => !prev);

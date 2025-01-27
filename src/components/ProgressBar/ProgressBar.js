@@ -5,7 +5,7 @@ const ProgressBar = ({statusProgress, handleClickFirstDot}) => {
 
     useEffect(() => {
        console.log("child component ", statusProgress)
-    }, [])
+    }, [statusProgress])
 
     const showShippingInfo = () => {
         handleClickFirstDot()

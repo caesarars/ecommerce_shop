@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import axios from "axios";
 import useFetch from "../../api/getCarts"
+import { API_URLS } from "../../api/apiURLs";
 import "./Carts.css"
 import CartComponent from "../../components/Carts/CartComponent";
 import SideBarCart from "./SideBarCart";
@@ -9,7 +10,7 @@ import { useCartContext } from "../../context/CartContext";
 
 const Carts = () => {
     const [ totalPrice, setTotalPrice ] = useState(0)
-    let { data, loading, error } = useFetch("http://localhost:3000/cart");
+    let { data, loading, error } = useFetch(API_URLS.CARTS);
     const  {listOfCart , setListOfCart } = useCartContext()
     
     if (loading) return <div>Loading...</div>;

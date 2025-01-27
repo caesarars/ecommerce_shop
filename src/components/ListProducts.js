@@ -9,10 +9,11 @@ import ProductItem from "./ProductItem/ProductItem";
 import axios from "axios";
 import SearchBox from "./SearchBox";
 import LabelProducts from "./LabelProducts";
+import { API_URLS } from "../api/apiURLs";
 
 const ListProduct = () => {
     
-  const URL_GET_PRODCUTS = "http://localhost:3000/product"  
+  const URL_GET_PRODCUTS = API_URLS.GET_PRODUCTS;  
 
   const [data, setData] = useState([]);
   const [searchValue , setSearchValue] = useState("")

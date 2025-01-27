@@ -33,7 +33,7 @@ const ImageBanner = () => {
 
          setTimeout(() => {
             setIndexImage((prevIndex) => {
-                console.log("prevIndex : " , prevIndex )
+                
                 const nextIndex = prevIndex >= modelImage.length - 1 ? 0 : prevIndex + 1;
                 return nextIndex;
             })

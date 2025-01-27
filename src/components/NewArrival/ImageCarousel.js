@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ProductNewArrival from "../ProductNewArrival/ProductNewArrival";
 
 const ImageCarousel = ({images, startIndex, endIndex, animationDirection }) => {
