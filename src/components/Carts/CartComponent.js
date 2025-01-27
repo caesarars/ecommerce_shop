@@ -7,18 +7,24 @@ import axios from "axios";
 import { API_URLS } from "../../api/apiURLs";
 import PopUp from "../PopUp/PopUp"
 import { useCartContext } from "../../context/CartContext";
+import { useCartPriceContext } from "../../context/CartPriceContext";
+import { useTokenContext } from "../../context/TokenContext";
 
 const CartComponent = (props) => {
 
     const checkboxRef = useRef(null);
 
     const { setListOfCart } = useCartContext();
+    const { totalPriceCart , setTotalPriceCart } = useCartPriceContext();
+    const { token } = useTokenContext();
 
     const {productId, productName, imageProduct, price, quantity, checkboxHandler, changeItemHandler, size} = props
 
     const [ itemsTotal , setItemsTotal] = useState(quantity);
 
     const [ toggleModal, setToggleModal ] = useState(false);
+
+    const [ totalPrice , setTotalPrice ] = useState(0)
 
 
     let product = {}
@@ -32,8 +38,16 @@ const CartComponent = (props) => {
         if (checkboxRef.current) {
             const isChecked = checkboxRef.current.checked;
             if (isChecked) {
-                product.price = price * quantity
-                changeItemHandler(product)
+                if (totalPriceCart >= 0) {
+                    console.log("totalPrice - " , totalPrice , " price - ", price)
+                    if (totalPriceCart - price < 0) {
+                        setTotalPriceCart(0)
+                    } else {
+                        setTotalPriceCart(totalPriceCart - price)
+                    }
+                } else {
+                    setTotalPriceCart(0)
+                }
             }
           }
        }
@@ -45,31 +59,49 @@ const CartComponent = (props) => {
         if (checkboxRef.current) {
             const isChecked = checkboxRef.current.checked;
             if (isChecked) {
-                product.price = price * quantity
-                changeItemHandler(product)
+                if ( totalPriceCart >= 0 ) {
+                    setTotalPriceCart(totalPriceCart + price)
+                } else {
+                    setTotalPriceCart(0)
+                }
             }
-          }
+        }
     }
 
     const handleCheckbox = (e) => {
 
         const isChecked = e.target.checked
-        console.log("is checked : " , isChecked)
-        if (e.target.checked) {
+
+        if ( isChecked ) {
             const priceProduct = price * itemsTotal;
-            product.price = priceProduct
-            checkboxHandler(product,e.target.checked)
+            if (totalPriceCart > 0 ) {
+                setTotalPriceCart(totalPriceCart + priceProduct)
+            } else {
+                setTotalPriceCart(priceProduct)
+            }
         } else {
-            const priceProduct = ( price *  itemsTotal ) * -1 ;
-            product.price = priceProduct
-            checkboxHandler(product, e.target.checked)
+
+            const priceProduct = ( price *  itemsTotal ) ;
+
+            if (totalPriceCart - priceProduct < 0) {
+                setTotalPriceCart(0)
+            } else {
+                setTotalPriceCart(totalPriceCart - priceProduct)
+            }
+
         }
     }
 
     const deleteCart = async () => {
         try {
-            const API_URL = DELETE_CART + "/" + productId
-            const responseDelete = await axios.delete(API_URL,{withCredentials:true})
+            const API_URL = API_URLS.CARTS + "/" + productId
+            const responseDelete = await axios.delete(API_URL,
+                {
+                    withCredentials:true,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                      }
+                })
             //setToggleModal(true)
             if ( responseDelete ) {
                 getCart()
@@ -121,9 +153,13 @@ const CartComponent = (props) => {
             </div>
             <div className="d-flex justify-content-end w-100 p-5">
                 <div className="d-flex flex-row align-items-center justify-content-end">
-                    <FontAwesomeIcon icon={faMinus} onClick={handleDecreaseItem}/>
-                <span className="montserrat-normal" style={{width:"36px", textAlign:"center", backgroundColor:"#edb203" , color:"black", borderRadius:"6px",  margin:"8px"}}>{itemsTotal}</span>
-                    <FontAwesomeIcon icon={faPlus} onClick={handleIncreaseItem} />
+                    <button onClick={handleDecreaseItem}>
+                        <FontAwesomeIcon icon={faMinus} />
+                    </button>
+                <span className="montserrat-normal" style={{width:"36px", textAlign:"center", backgroundColor:"#edb203" , color:"black", borderRadius:"6px",  margin:"8px"}} aria-disabled>{itemsTotal}</span>
+                    <button onClick={handleIncreaseItem}>
+                        <FontAwesomeIcon icon={faPlus} />
+                    </button>
                 </div>
                 <div className="d-flex justify-content-center w-25 align-items-center">
                     <FontAwesomeIcon icon={faTrash} onClick={deleteCart}/>

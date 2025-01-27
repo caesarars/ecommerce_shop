@@ -8,7 +8,7 @@ import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons
 
 
 const NewArrival = () => {
-    const URL_GET_PRODCUTS = API_URLS.CARTS;
+    const URL_GET_PRODCUTS = API_URLS.GET_PRODUCTS;
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [animationDirection , setAnimationDirection] = useState("next");
@@ -19,13 +19,14 @@ const NewArrival = () => {
     const endIndex = startIndex + imagePerView;
 
     const [ data, setData ] = useState([]) 
+    const token = localStorage.getItem("token");
 
     const fetchData = async (params = {}) => {
         try {
             const response = await axios.get(URL_GET_PRODCUTS, {
                 params:params
             })
-            setData(response.data.products)
+            //setData(response.data.products)
     
         } catch(err) {
             console.error(err.message)

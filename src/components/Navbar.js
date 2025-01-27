@@ -34,7 +34,6 @@ const Navbar = () => {
             console.log(response)
 
             if (response.status === 200) {
-                console.log("success logout")
                 setUsername(null)
                 setUserId(null); // Clear userId on logout
                 navigate("/")

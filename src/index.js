@@ -24,8 +24,12 @@ import Shop from "./pages/Shop"
 import Sandbox from './pages/Sandbox';
 import Carts from './pages/Carts/Carts';
 import CartCheckout from './pages/CartCheckout/CartCheckout';
+
 import { UserProvider } from './context/UserContext';
 import { CartProvider } from './context/CartContext';
+import { CartPriceProvider } from './context/CartPriceContext';
+import { TokenProvider } from './context/TokenContext';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -79,12 +83,16 @@ root.render(
 
   <React.StrictMode>
       <UserProvider>
-      <CartProvider>
-      <Provider store={store}>
-        <RouterProvider router={router}>
-      </RouterProvider>
-      </Provider>
-      </CartProvider>
+          <CartProvider>
+            <CartPriceProvider>
+              <TokenProvider>
+                <Provider store={store}>
+                  <RouterProvider router={router}>
+                  </RouterProvider>
+                </Provider>
+              </TokenProvider>
+            </CartPriceProvider>
+          </CartProvider>
       </UserProvider>
   </React.StrictMode>
 

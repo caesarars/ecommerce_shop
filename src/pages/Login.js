@@ -14,6 +14,7 @@ import { API_URLS } from "../api/apiURLs";
 
 import { setUser } from '../userSlice';  // Import the setUser action
 import { useDispatch } from 'react-redux';
+import { useTokenContext } from "../context/TokenContext";
 
 axios.defaults.withCredentials = true; // Set this globally if all requests use it
 
@@ -26,7 +27,7 @@ const Login = () => {
     const [successLogin, setSuccessLogin] = useState(false)
     const [isLoading , setIsLoading] = useState(false)
     const dispatch = useDispatch();  // Correct dispatch function from Redux
-
+    const { setToken } = useTokenContext();
 
     const navigate = useNavigate(); // Initialize useNavigate hook
 
@@ -67,6 +68,7 @@ const Login = () => {
 
             if (response.status === 200 ) {
                 localStorage.setItem("token", response.data.token);
+                //setToken(response.data.token)
                 setSuccessLogin(true)
                 dispatch(setUser(
                     {

@@ -7,54 +7,27 @@ import "./Carts.css"
 import CartComponent from "../../components/Carts/CartComponent";
 import SideBarCart from "./SideBarCart";
 import { useCartContext } from "../../context/CartContext";
+import { useCartPriceContext } from "../../context/CartPriceContext";
 
 const Carts = () => {
     const [ totalPrice, setTotalPrice ] = useState(0)
     let { data, loading, error } = useFetch(API_URLS.CARTS);
     const  {listOfCart , setListOfCart } = useCartContext()
+    const { totalPriceCart } = useCartPriceContext()
     
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
    
-    const handleCartCheckbox = (data, checked) => {    
-        if ( checked ) {
-            setListOfCart(prevList => {
-                const updatedList = [...prevList, data]
-                console.log('updated list : ' , updatedList)
-                const totalPrice = updatedList.reduce((total, item) => total + item.price, 0);
-                setTotalPrice(totalPrice);
-                return updatedList;
-            })
-            
+    const handleCartCheckbox = (price, isChecked) => {   
+        if (isChecked) {
+            setTotalPrice(price);
         } else {
-            setListOfCart(prevList => {
-                const updatedList = [...prevList].filter(item => item.id !== data.id)
-                const totalPrice = updatedList.reduce((total, item) => total + item.price, 0);
-                setTotalPrice(totalPrice);
-                return updatedList;
-            })
+            setTotalPrice(totalPrice -price);
         }
     }
 
-    const changeItemHandler = (data) => {
-        setListOfCart(prevList => {
-            const updatedList = prevList.map(item => {
-                if (item.id === data.id) {
-                    return { ...item, price: data.price };
-                }
-                return item;
-            });
-            
-            const itemFound = prevList.some(item => item.id === data.id);
-            if (!itemFound) {
-                console.error(`Item with id ${data.id} not found in the cart.`);
-                return prevList;
-            }
-            
-            const newTotalPrice = updatedList.reduce((total, item) => total + item.price, 0);
-            setTotalPrice(newTotalPrice); 
-            return updatedList;
-        })
+    const changeItemHandler = (price) => {
+        setTotalPrice(price)
     }
 
     return (
@@ -79,7 +52,7 @@ const Carts = () => {
                                 ))}
                             </div>
 
-                            <SideBarCart totalPrice={totalPrice} />
+                            <SideBarCart totalPrice={totalPriceCart} />
                     </div>
             </div>
             </div>

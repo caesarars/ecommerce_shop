@@ -123,7 +123,6 @@ const Product = () => {
         } catch (err) {
             console.error(err)
         }
-//
     }
 
     const addToCartPopUp = () => {
