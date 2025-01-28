@@ -92,10 +92,14 @@ const Login = () => {
                 setErrorMessage(err.message)
             }
         }
+        
         setIsLoading(false)
     }
 
     return (
+       
+        <>
+        <LoadingComponent isLoading={isLoading} />
         <div className="d-flex montserrat-normal">
             <div className="left_side" style={{
                 backgroundImage: `url(${modelImage[indexImage]})`,
@@ -113,7 +117,7 @@ const Login = () => {
             </div>
             <div className="right_side">
                 <div className="container mt-5">
-                     {isLoading && <LoadingComponent />}
+                    
                     <div className="d-flex justify-content-center align-items-center flex-column" style={{height:"86vh"}}>
                         <h3 id="ecommerce_name" onClick={() => handleHomapageClick() } className="montserrat-normal">Ars Empire</h3>
                         <p onClick={() => handleHomapageClick() } className="montserrat-normal" style={{fontWeight:400}}>Welcome to the most fascinating fashion online store</p>
@@ -143,7 +147,8 @@ const Login = () => {
             </div>
             {successLogin && <SuccessPopUp message={"Success Login"} onClose={() => {setSuccessLogin(false)}} />}
             {errorMessage && <ErrorPopUp message={errorMessage} onClose={() => {setErrorMessage("")}} />}
-        </div>  
+        </div>
+    </>  
     )
 }
 

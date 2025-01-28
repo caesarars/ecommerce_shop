@@ -12,7 +12,8 @@ import PopUp from "../PopUp/PopUp"
 import ProductImageDetail from "./ProductImageDetail";
 import { useUserContext } from '../../context/UserContext';
 import { API_URLS } from "../../api/apiURLs"; // Adjust the path as necessary
-
+import LoadingComponent from "../LoadingComponent/LoadingComponent";
+import Navbar from "../Navbar";
 
 const Product = () => {
     const { userId } = useUserContext(); // Access userId from context
@@ -42,7 +43,7 @@ const Product = () => {
 
     console.log("Product totalPrice : ", totalPrice)
     const [selectedSize, setSelectedSize] = useState(null);
-
+    const [isLoading , setIsLoading ] = useState(false)
 
     const [ toggleOrderPage , setToggleOrderPage ] = useState(false)
 
@@ -63,6 +64,7 @@ const Product = () => {
     }
 
     const getDetailProduct = async () => {
+        setIsLoading(true)
         const response = await axios.get(URL_GET_PRODCUT)
         console.log("response get detail product " , response)
         setNameProduct(response.data.name)
@@ -75,6 +77,7 @@ const Product = () => {
         setListSizeProduct(response.data.detail)
         setProductId(response.data._id)
         console.log("response detail ", response.data)
+        setIsLoading(false)
     }
 
     const showModal = () => {
@@ -103,6 +106,7 @@ const Product = () => {
     }
 
     const addToCart = async () => {
+        setIsLoading(true)
         const reqBody = {}
         reqBody.userId = userId
         reqBody.productId = productId
@@ -116,6 +120,7 @@ const Product = () => {
         try {
             const response = await axios.post(URL_ADD_TO_CART, reqBody , {withCredentials:true})
             if (response.data) {
+                setIsLoading(false)
                 showModal(true)
                 window.location.reload();
                 console.log(response)
@@ -123,6 +128,7 @@ const Product = () => {
         } catch (err) {
             console.error(err)
         }
+        
     }
 
     const addToCartPopUp = () => {
@@ -141,10 +147,18 @@ const Product = () => {
 
     const detailPage = () => {
         return (
-            <div className="d-flex mt-5">
+            <>
+                <LoadingComponent isLoading={isLoading}/>
+                <Navbar />
+
+                <div className="d-flex mt-5">
                 <div className="container_detail_left">
                     <div className="container_image d-flex">
-                        <img src={imageUrl[selectedImageIndex]} style={{width:"80%"}} alt="main_image_product"/>
+                    
+                        {imageUrl && imageUrl[selectedImageIndex] ? <img src={imageUrl[selectedImageIndex]} style={{width:"80%"}} alt="main_image_product"/> : 
+                            <div style={{width:"80%" , height:"375px", backgroundColor:"grey", opacity:0.5}}>
+                            </div>
+                        }
                     </div>
                     <div className="d-flex">
                         <div className="d-flex flex-row flex-start container_subimage">
@@ -230,6 +244,8 @@ const Product = () => {
                     </div>
                 </div>
             </div>
+            </>
+            
         )
     }
 

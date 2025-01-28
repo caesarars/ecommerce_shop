@@ -1,22 +1,21 @@
 import React, {useEffect} from "react";
+import "./LoadingComponent.css"
 
-
-const LoadingComponent = ({onClose}) => {
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            onClose();  // Call the onClose function passed from parent to hide the popup
-        }, 3000);
-        return () => clearTimeout(timer);  // Cleanup the timer
-    }, [onClose]);
-
+const LoadingComponent = ({isLoading}) => {
+  
     return (
-        <div className="d-flex justify-content-center align-items-center position-fixed" style={{ height: '100vh' }}>
-            {/* Bootstrap Spinner */}
-            <div class="spinner-border text-primary" role="status">
-                <span class="sr-only"></span>
+        <>
+            {isLoading &&  
+            <div className="background_loading">
+              <div className="d-flex justify-content-center align-items-center" style={{height:'100vh'}}>
+                <div class="spinner-border text-danger" role="status" style={{opacity:1, width:'64px', height:'64px'}}>
+                    <span  style={{opacity:1}} class="sr-only"></span>
+                </div>
             </div>
-        </div>
+        </div>}
+        </>
+       
+      
     )
 }
 

@@ -8,15 +8,14 @@ import CartComponent from "../../components/Carts/CartComponent";
 import SideBarCart from "./SideBarCart";
 import { useCartContext } from "../../context/CartContext";
 import { useCartPriceContext } from "../../context/CartPriceContext";
+import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 
 const Carts = () => {
     const [ totalPrice, setTotalPrice ] = useState(0)
     let { data, loading, error } = useFetch(API_URLS.CARTS);
     const  {listOfCart , setListOfCart } = useCartContext()
     const { totalPriceCart } = useCartPriceContext()
-    
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
+  
    
     const handleCartCheckbox = (price, isChecked) => {   
         if (isChecked) {
@@ -32,6 +31,7 @@ const Carts = () => {
 
     return (
         <>
+            <LoadingComponent isLoading={loading} />
             <Navbar />
             <div className="bg-container-cart">
                 <div className="container mt-5 pt-5">

@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faTrash , faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 import "./CartComponent.css"
-import { DELETE_CART } from "../../api/cartAPIs";
 import axios from "axios";
 import { API_URLS } from "../../api/apiURLs";
 import PopUp from "../PopUp/PopUp"
@@ -18,13 +17,11 @@ const CartComponent = (props) => {
     const { totalPriceCart , setTotalPriceCart } = useCartPriceContext();
     const { token } = useTokenContext();
 
-    const {productId, productName, imageProduct, price, quantity, checkboxHandler, changeItemHandler, size} = props
+    const {productId, productName, imageProduct, price, quantity, size} = props
 
     const [ itemsTotal , setItemsTotal] = useState(quantity);
 
     const [ toggleModal, setToggleModal ] = useState(false);
-
-    const [ totalPrice , setTotalPrice ] = useState(0)
 
 
     let product = {}
@@ -39,7 +36,6 @@ const CartComponent = (props) => {
             const isChecked = checkboxRef.current.checked;
             if (isChecked) {
                 if (totalPriceCart >= 0) {
-                    console.log("totalPrice - " , totalPrice , " price - ", price)
                     if (totalPriceCart - price < 0) {
                         setTotalPriceCart(0)
                     } else {
@@ -102,7 +98,6 @@ const CartComponent = (props) => {
                         Authorization: `Bearer ${token}`,
                       }
                 })
-            //setToggleModal(true)
             if ( responseDelete ) {
                 getCart()
                 setToggleModal(true)

@@ -29,6 +29,7 @@ import { UserProvider } from './context/UserContext';
 import { CartProvider } from './context/CartContext';
 import { CartPriceProvider } from './context/CartPriceContext';
 import { TokenProvider } from './context/TokenContext';
+import Product from './components/ProductDetail/Product';
 
 const router = createBrowserRouter([
   {

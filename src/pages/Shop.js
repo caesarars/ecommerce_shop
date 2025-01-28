@@ -14,6 +14,7 @@ import ShopLoading from "../components/Shop/ShopLoading";
 import axios from "axios";
 import Pagination from "../components/Pagination/Pagination";
 import "./Shop.css"
+import LoadingComponent from "../components/LoadingComponent/LoadingComponent";
 
 // Your API call function
 const fetchData = async (url) => {
@@ -37,7 +38,7 @@ const Shop = () => {
     
    
     const [error , setError] = useState(false) 
-    const [loading, setLoading] = useState(false)
+    const [ loading, setLoading] = useState(false)
     const [ totalData , setTotalData ] = useState(0)
     const [ pagination, setPagination ] = useState({})
 
@@ -101,6 +102,8 @@ const Shop = () => {
     }, [])
 
     const fetchProducts = async () => {
+         setLoading(true);
+
         let queryString = "?";
         
         if (filters && Object.keys(filters).length > 0) {
@@ -116,6 +119,7 @@ const Shop = () => {
     
         const response = await fetchData(urlParams); // Await the result of fetchData
         if (response) {
+          setLoading(false);
           setData(response.products);  // Update state with the response data
           setTotalData(response.pagination.totalItems)
           setPagination(response.pagination)
@@ -134,6 +138,7 @@ const Shop = () => {
 
     return (
         <>
+            <LoadingComponent isLoading={loading} />
             <Navbar />
             <div className="container height80" style={{height :''}}>
                 <div className="mt-5"></div>
@@ -161,9 +166,6 @@ const Shop = () => {
                       handleFilterShop={handleFilterShop} 
                       applyFilter={applyFilter} 
                       clearFilter={clearFilter}/>
-                    
-                    <ShopLoading 
-                      loading={loading} />
 
                     <ShopProducts 
                       error={error} 

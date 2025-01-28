@@ -5,7 +5,6 @@ import Product from "../components/ProductDetail/Product";
 const ProductDetail = () => {
     return (
         <>
-            <Navbar />
             <Product />
         </>
     )
