@@ -155,9 +155,10 @@ const Product = () => {
                 <div className="container_detail_left">
                     <div className="container_image d-flex">
                     
-                        {imageUrl && imageUrl[selectedImageIndex] ? <img src={imageUrl[selectedImageIndex]} style={{width:"80%"}} alt="main_image_product"/> : 
-                            <div style={{width:"80%" , height:"375px", backgroundColor:"grey", opacity:0.5}}>
-                            </div>
+                        {imageUrl && imageUrl[selectedImageIndex] ? 
+                            (<img src={imageUrl[selectedImageIndex]} style={{width:"80%"}} alt="main_image_product"/>) 
+                            : 
+                            (<div style={{width:"80%" , height:"375px", backgroundColor:"grey", opacity:0.5}}></div>)
                         }
                     </div>
                     <div className="d-flex">

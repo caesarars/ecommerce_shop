@@ -7,7 +7,6 @@ import { API_URLS } from "../../api/apiURLs";
 import PopUp from "../PopUp/PopUp"
 import { useCartContext } from "../../context/CartContext";
 import { useCartPriceContext } from "../../context/CartPriceContext";
-import { useTokenContext } from "../../context/TokenContext";
 
 const CartComponent = (props) => {
 
@@ -15,7 +14,6 @@ const CartComponent = (props) => {
 
     const { setListOfCart } = useCartContext();
     const { totalPriceCart , setTotalPriceCart } = useCartPriceContext();
-    const { token } = useTokenContext();
 
     const {productId, productName, imageProduct, price, quantity, size} = props
 
@@ -90,6 +88,7 @@ const CartComponent = (props) => {
 
     const deleteCart = async () => {
         try {
+            const token = localStorage.getItem("token");
             const API_URL = API_URLS.CARTS + "/" + productId
             const responseDelete = await axios.delete(API_URL,
                 {
