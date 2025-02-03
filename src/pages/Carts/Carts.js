@@ -15,18 +15,47 @@ const Carts = () => {
     let { data, loading, error } = useFetch(API_URLS.CARTS);
     const  {listOfCart , setListOfCart } = useCartContext()
     const { totalPriceCart } = useCartPriceContext()
+    const [ selectedCart, setSelectedCart ] = useState([])
   
    
-    const handleCartCheckbox = (price, isChecked) => {   
+    const handleCartCheckbox = (product, isChecked) => {   
+        console.log("isChecked : " , isChecked)
         if (isChecked) {
-            setTotalPrice(price);
+            console.log("product checked " , product)
+
+            setSelectedCart((prevCart) => {
+                const updatedCart = [...prevCart, product]
+                console.log("updatedCart : " , updatedCart)
+                return updatedCart;
+            })
+
         } else {
-            setTotalPrice(totalPrice -price);
+            setSelectedCart((prevCart) => {
+                const updatedCart = [...prevCart].filter((item) => item.productId !== product.productId)
+                console.log("updated cart unchecked : " , updatedCart)
+                return updatedCart;
+            });
+            console.log("product unchecked " , product)
         }
     }
 
-    const changeItemHandler = (price) => {
-        setTotalPrice(price)
+    const changeItemHandler = (product) => {
+
+        setSelectedCart((prevCart) => {
+            let updatedCart = [...prevCart];
+            const index = updatedCart.findIndex((item) => item.productId === product.productId);
+            console.log(index)
+            if (index !== -1) {
+              if (product.quantity <= 0) {
+                updatedCart = [...prevCart].filter((item) => item.productId !== product.productId)
+              } else {
+                updatedCart[index] = { ...updatedCart[index], quantity: product.quantity };
+              }
+            }
+            console.log("change quantity product : " , updatedCart)
+
+            return updatedCart;
+          });
     }
 
     return (
@@ -52,7 +81,7 @@ const Carts = () => {
                                 ))}
                             </div>
 
-                            <SideBarCart totalPrice={totalPriceCart} />
+                            <SideBarCart totalPrice={totalPriceCart} selectedCart={selectedCart}/>
                     </div>
             </div>
             </div>

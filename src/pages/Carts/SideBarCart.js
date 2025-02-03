@@ -1,12 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useCartPriceContext } from "../../context/CartPriceContext";
 
-const SideBarCart = ({totalPrice}) => {
+
+const SideBarCart = ({totalPrice, selectedCart, isCheckOut}) => {
     const navigate = useNavigate();
-
+    const { setTotalPriceCart } = useCartPriceContext()
 
     const navigateCheckout = () => {
-        navigate('/cart/checkout')
+        setTotalPriceCart(0)
+        navigate('/cart/checkout', {
+            state : selectedCart
+        })
     }
 
     return (
@@ -18,11 +23,19 @@ const SideBarCart = ({totalPrice}) => {
                     <div>
                         <hr/>
                     </div>
-                    <div className="p-2">
-                        <input className="form-control" type="text" placeholder="Redeem Voucher Here"/>
-                    </div>
-                    <hr/>
-                    <button className="btn btn-success w-100" onClick={navigateCheckout}>Checkout</button>
+                    {!isCheckOut ? 
+                    <>
+                        <div className="p-2">
+                            <input className="form-control" type="text" placeholder="Redeem Voucher Here"/>
+                        </div>
+                        <hr/>
+                        <button className="btn btn-success w-100" onClick={navigateCheckout}>Checkout</button>
+                    </> : <>
+                        <div>
+                            <h3>Payment Method</h3>
+                        </div>
+                    </>}
+                   
                 </div>
             </div>
         </>

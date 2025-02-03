@@ -15,7 +15,7 @@ const CartComponent = (props) => {
     const { setListOfCart } = useCartContext();
     const { totalPriceCart , setTotalPriceCart } = useCartPriceContext();
 
-    const {productId, productName, imageProduct, price, quantity, size} = props
+    const {productId, productName, imageProduct, price, quantity, size, checkboxHandler, changeItemHandler, isCheckOut } = props
 
     const [ itemsTotal , setItemsTotal] = useState(quantity);
 
@@ -23,23 +23,31 @@ const CartComponent = (props) => {
 
 
     let product = {}
-    product.id = productId
+    product.productId = productId
+    product.productName = productName
+    product.imageProduct = imageProduct
+    product.size = size
+    product.price = price;
 
     const handleDecreaseItem = () => {
        let quantity = itemsTotal - 1;
        if (itemsTotal !== 0 ) {
         setItemsTotal(quantity)
-
         if (checkboxRef.current) {
             const isChecked = checkboxRef.current.checked;
             if (isChecked) {
                 if (totalPriceCart >= 0) {
                     if (totalPriceCart - price < 0) {
+                        product.quantity = 0;
+                        changeItemHandler(product)
                         setTotalPriceCart(0)
                     } else {
+                        product.quantity = quantity;
+                        changeItemHandler(product)
                         setTotalPriceCart(totalPriceCart - price)
                     }
                 } else {
+                    product.quantity = 0;
                     setTotalPriceCart(0)
                 }
             }
@@ -54,8 +62,12 @@ const CartComponent = (props) => {
             const isChecked = checkboxRef.current.checked;
             if (isChecked) {
                 if ( totalPriceCart >= 0 ) {
+                    product.quantity = quantity
+                    changeItemHandler(product)
                     setTotalPriceCart(totalPriceCart + price)
                 } else {
+                    product.quantity = 0
+                    changeItemHandler(product)
                     setTotalPriceCart(0)
                 }
             }
@@ -69,19 +81,23 @@ const CartComponent = (props) => {
         if ( isChecked ) {
             const priceProduct = price * itemsTotal;
             if (totalPriceCart > 0 ) {
+                product.quantity = itemsTotal
                 setTotalPriceCart(totalPriceCart + priceProduct)
             } else {
+                product.quantity = itemsTotal;
                 setTotalPriceCart(priceProduct)
             }
+            checkboxHandler(product, isChecked)
         } else {
 
             const priceProduct = ( price *  itemsTotal ) ;
-
+            product.quantity = 0;
             if (totalPriceCart - priceProduct < 0) {
                 setTotalPriceCart(0)
             } else {
                 setTotalPriceCart(totalPriceCart - priceProduct)
             }
+            checkboxHandler(product, isChecked)
 
         }
     }
@@ -120,6 +136,9 @@ const CartComponent = (props) => {
         setToggleModal(false)
     }
 
+    const containerActions = "d-flex justify-content-end w-100 p-5"
+    const containerNameAndPrice = "d-flex flex-column w-100 p-5"
+
     const popUpSuccess = () => {
         return (
             <>
@@ -139,13 +158,17 @@ const CartComponent = (props) => {
                 {popUpSuccess()}
             </PopUp>
             <div className="container-cart d-flex align-items-center p-3">
-            <input type="checkbox" ref={checkboxRef} className="checkbox_cart" onChange={handleCheckbox}/>
-            <img className="image_cart" src={imageProduct} alt={productName} width="160px"/>
-            <div className="d-flex flex-column w-100 p-5">
+            { !isCheckOut && <input type="checkbox" ref={checkboxRef} className="checkbox_cart" onChange={handleCheckbox}/>}
+            { !isCheckOut ?  <><img className="image_cart" src={imageProduct} alt={productName} width="160px"/></> : <>
+                <img className="image_cart" src={imageProduct} alt={productName} width="64px"/>
+            </> }
+            <div className={!isCheckOut ? containerNameAndPrice : ""}>
                 <p className="montserrat-light">{productName} - {size}</p>
                 <p className="montserrat-normal">${price}</p>
             </div>
-            <div className="d-flex justify-content-end w-100 p-5">
+
+            {!isCheckOut && <>
+                <div className={containerActions}>
                 <div className="d-flex flex-row align-items-center justify-content-end">
                     <button onClick={handleDecreaseItem}>
                         <FontAwesomeIcon icon={faMinus} />
@@ -159,6 +182,7 @@ const CartComponent = (props) => {
                     <FontAwesomeIcon icon={faTrash} onClick={deleteCart}/>
                 </div>
             </div>
+            </> }
         </div>
         </>
        

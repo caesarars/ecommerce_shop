@@ -48,22 +48,29 @@ const Navbar = () => {
        // Check if the session exists
        const checkSession = async () => {
         console.log("check session")
-            const token = localStorage.getItem("token");
-            const response = await axios.get(API_URLS.ME, {withCredentials:true,headers: {
-                Authorization: `Bearer ${token}`,
-              }});
-            const responseCart = await axios.get(API_URLS.CARTS, {withCredentials:true, headers: {
-                Authorization: `Bearer ${token}`,
-              }})
-
-              if (response.data) {
-                setUsername(response.data.name);
-                setUserId(response.data.id); // Set userId from response
-              }
-
-              if (responseCart.data) {
-                  setListOfCart(responseCart.data.carts)
-              }
+            try {
+                const token = localStorage.getItem("token");
+                const response = await axios.get(API_URLS.ME, {withCredentials:true,headers: {
+                    Authorization: `Bearer ${token}`,
+                  }});
+                const responseCart = await axios.get(API_URLS.CARTS, {withCredentials:true, headers: {
+                    Authorization: `Bearer ${token}`,
+                  }})
+    
+                  if (response.data) {
+                    setUsername(response.data.name);
+                    setUserId(response.data.id); // Set userId from response
+                  }
+    
+                  if (responseCart.data) {
+                      setListOfCart(responseCart.data.carts)
+                  }
+            } catch (err) {
+                setUsername(null)
+                setUserId(null);
+                setListOfCart(null)
+            }
+           
         
     };
 
