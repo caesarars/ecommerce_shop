@@ -160,9 +160,9 @@ const CartComponent = (props) => {
             <div className="container-cart d-flex align-items-center p-3">
             { !isCheckOut && <input type="checkbox" ref={checkboxRef} className="checkbox_cart" onChange={handleCheckbox}/>}
             { !isCheckOut ?  <><img className="image_cart" src={imageProduct} alt={productName} width="160px"/></> : <>
-                <img className="image_cart" src={imageProduct} alt={productName} width="64px"/>
+                <img className="image_cart" src={imageProduct} alt={productName} width="86px"/>
             </> }
-            <div className={!isCheckOut ? containerNameAndPrice : ""}>
+            <div className={!isCheckOut ? containerNameAndPrice : "d-flex flex-column w-25 p-2"}>
                 <p className="montserrat-light">{productName} - {size}</p>
                 <p className="montserrat-normal">${price}</p>
             </div>

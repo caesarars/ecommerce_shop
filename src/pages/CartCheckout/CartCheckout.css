@@ -1,0 +1,41 @@
+.wrapper_cart {
+    border-radius: 16px;
+    background-color: white;
+}
+
+.bg-grey {
+    background-color: rgb(241, 241, 241);
+}
+.container-list-product {
+    width: 56%;
+    background-color: white;
+    border-radius: 6px;
+}
+
+.container-cart-product {
+    margin-bottom: 16px;
+}
+
+.container-wording-product {
+    margin-left: 24px;
+}
+
+.wording-price {
+    text-align: right;
+}
+
+.image-cart {
+    border-radius: 6px;
+}
+
+.container-checkout {
+    width: 28%;
+    background-color: white;
+    border-radius: 6px;
+    margin-left: 64px;
+}
+
+.wording-payment {
+    padding-left: 8px;
+    padding-top: 16px;
+}
