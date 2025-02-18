@@ -7,10 +7,10 @@
     background-color: rgb(241, 241, 241);
 }
 .container-list-product {
-    width: 60%;
+    width: 37%;
     background-color: white;
     border-radius: 6px;
-height: fit-content;
+    height: fit-content;
     overflow: auto;
 }
 
@@ -73,6 +73,22 @@ height: fit-content;
 }
 
 .container-shipping-address {
-    max-height: 380px;
+    max-height: 800px;
+    width: 28%;
     overflow: auto;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.container-payment-methods {
+    width: 30%;
+    background-color: white;
+    border-radius: 8px;
+    height: fit-content;
+}
+
+.button_connected{
+    width: 100%;
+    background-color: orange;
+    
 }

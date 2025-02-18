@@ -176,11 +176,11 @@ const CartComponent = (props) => {
             {!isCheckOut && <>
                 <div className={containerActions}>
                 <div className="d-flex flex-row align-items-center justify-content-end">
-                    <button onClick={handleDecreaseItem}>
+                    <button className="btn btn-default" onClick={handleDecreaseItem}>
                         <FontAwesomeIcon icon={faMinus} />
                     </button>
                 <span className="montserrat-normal" style={{width:"36px", textAlign:"center", backgroundColor:"#edb203" , color:"black", borderRadius:"6px",  margin:"8px"}} aria-disabled>{itemsTotal}</span>
-                    <button onClick={handleIncreaseItem}>
+                    <button className="btn btn-default" onClick={handleIncreaseItem}>
                         <FontAwesomeIcon icon={faPlus} />
                     </button>
                 </div>

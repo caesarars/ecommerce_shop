@@ -35,21 +35,22 @@ const ShippingAddressForm = () => {
 
     return (           
             <div className=" container-shipping-address p-4 shadow montserrat-light">
+                    <p className="montserrat-normal">Shipping Address</p>
                     <div className="mb-3">
-                        <label className="form-label">Nama Penerima</label>
+                        <label className="form-label montserrat-light">Recipient's Name</label>
                         <input
                             type="text"
                             className="form-control"
                             name="fullName"
                             value={address.fullName}
                             onChange={handleChange}
-                            placeholder="Nama lengkap"
+                            placeholder="John Doe"
                             required
                         />
                     </div>
 
                     <div className="mb-3">
-                        <label className="form-label">Nomor Telepon</label>
+                        <label className="form-label">Phone No</label>
                         <input
                             type="tel"
                             className="form-control"
@@ -62,12 +63,12 @@ const ShippingAddressForm = () => {
                     </div>
 
                     <div className="mb-3">
-                        <label className="form-label">Alamat Lengkap</label>
+                        <label className="form-label">Complete Address</label>
                         <textarea
                             className="form-control"
                             name="street"
                             value={address.street}
-                            onChange={handleChange}
+                            onChange={handleChange} 
                             rows="3"
                             placeholder="Nama jalan, RT/RW, Nomor rumah, Kelurahan"
                             required
@@ -75,7 +76,7 @@ const ShippingAddressForm = () => {
                     </div>
 
                     <div className="mb-3">
-                        <label className="form-label">Provinsi</label>
+                        <label className="form-label">Province</label>
                         <select
                             className="form-control"
                             name="province"
@@ -94,7 +95,7 @@ const ShippingAddressForm = () => {
 
                     {address.province && (
                         <div className="mb-3">
-                            <label className="form-label">Kota/Kabupaten</label>
+                            <label className="form-label">City/District</label>
                             <select
                                 className="form-control"
                                 name="city"
@@ -102,7 +103,7 @@ const ShippingAddressForm = () => {
                                 onChange={handleChange}
                                 required
                             >
-                                <option value="">Pilih Kota/Kabupaten</option>
+                                <option value="">Choose City/District</option>
                                 {cities[address.province]?.map((city, index) => (
                                     <option key={index} value={city}>
                                         {city}
@@ -113,33 +114,33 @@ const ShippingAddressForm = () => {
                     )}
 
                     <div className="mb-3">
-                        <label className="form-label">Kecamatan</label>
+                        <label className="form-label">Sub District</label>
                         <input
                             type="text"
                             className="form-control"
                             name="district"
                             value={address.district}
                             onChange={handleChange}
-                            placeholder="Masukkan kecamatan"
+                            placeholder="Illinois"
                             required
                         />
                     </div>
 
                     <div className="mb-3">
-                        <label className="form-label">Kode Pos</label>
+                        <label className="form-label">Postal Code</label>
                         <input
                             type="text"
                             className="form-control"
                             name="postalCode"
                             value={address.postalCode}
                             onChange={handleChange}
-                            placeholder="Masukkan kode pos"
+                            placeholder="9812"
                             required
                         />
                     </div>
 
                     <button type="submit" className="btn btn-primary w-100">
-                        Simpan Alamat
+                        Confirm Address
                     </button>                
             </div>
     );
