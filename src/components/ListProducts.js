@@ -3,8 +3,6 @@ import "./ListProducts.css"
 
 import { useState, useEffect } from "react";
 
-import { ref, getDownloadURL } from "firebase/storage";
-import { storage } from "../firebase";
 import ProductItem from "./ProductItem/ProductItem";
 import axios from "axios";
 import SearchBox from "./SearchBox";
@@ -59,7 +57,6 @@ const ListProduct = () => {
     fetchData(params)
   }
 
-  console.log("newData : " , data)
 
     return (
         <div className="w-100" style={{backgroundColor:"#f3f3f3"}}>

@@ -13,7 +13,7 @@ const Footer = () => {
     return (
         <div className="container_footer bg-dark">
             <div className="container">
-                <div className="d-flex justify-content-between align-items-center mt-5 pt-5">
+                <div className="d-flex justify-content-between align-items-center pt-5">
                     <div className="d-flex flex-column justify-content-center ">
                         <h3 className="montserrat-normal">Ars Empire</h3>
                         <p>an online fashion shop to fill your day with confidence</p>

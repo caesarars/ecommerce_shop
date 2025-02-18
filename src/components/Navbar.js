@@ -91,7 +91,7 @@ const Navbar = () => {
                 <span onClick={ () => navigate("/") } className="mainColor ecommerceName" style={{fontSize:"36px"}}>Ars Empire</span>
                 <div className="d-flex justify-content-between align-items-center">
                     <span onClick={() => navigate("/shop")} style={{marginLeft : "136px"}}>Shop</span>
-                    <span style={{marginLeft : "36px"}}>New Arrival</span>
+                    
                     <span style={{marginLeft : "36px"}}>About</span>
                     <SearchBox  style={{width:"300px"}} onEnterButton={() => handleEnterButton()}  onSeachValue = {(val) => {handleSeachValue(val)}}/>
                 </div>

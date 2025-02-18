@@ -12,10 +12,11 @@ import LoadingComponent from "../../components/LoadingComponent/LoadingComponent
 
 const Carts = () => {
     const [ totalPrice, setTotalPrice ] = useState(0)
-    let { data, loading, error } = useFetch(API_URLS.CARTS);
-    const  {listOfCart , setListOfCart } = useCartContext()
+    let   { data, loading, error } = useFetch(API_URLS.CARTS);
+    const { listOfCart , setListOfCart } = useCartContext()
     const { totalPriceCart } = useCartPriceContext()
     const [ selectedCart, setSelectedCart ] = useState([])
+    const [ selectedAllCart , setSelectedAllCart ] = useState(false)
   
    
     const handleCartCheckbox = (product, isChecked) => {   
@@ -58,17 +59,28 @@ const Carts = () => {
           });
     }
 
+    const selectAllCart = () => {
+        setSelectedAllCart(!selectedAllCart)
+    }
+
     return (
         <>
             <LoadingComponent isLoading={loading} />
             <Navbar />
             <div className="bg-container-cart">
                 <div className="container mt-5 pt-5">
+                    <h3 className="montserrat-normal mb-3">Cart</h3>
                     <div className="d-flex justify-content-between">
-                            <div className="wrapper_cart"  style={{overflow:"auto", height:"98vh"}}>
+                            <div className="wrapper_cart shadow"  style={{overflow:"auto", height:"98vh"}}>
+                                {/*<div className="montserrat-normal wording-select-all">
+                                    <button className="btn btn-primary">
+                                        <span onClick={() => selectAllCart()}>{!selectedAllCart ? "Select All" : "Unselect All"}</span>
+                                    </button>
+                                </div>*/}
                                 {listOfCart && listOfCart.map((cart,index) => (
                                     <div className="cart_component">
                                         <CartComponent 
+                                            selectAllCart={selectedAllCart}
                                             productId={cart._id}
                                             changeItemHandler = {changeItemHandler}
                                             checkboxHandler={handleCartCheckbox}

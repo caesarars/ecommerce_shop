@@ -7,11 +7,29 @@ import { useLocation } from "react-router-dom";
 import CartComponent from "../../components/Carts/CartComponent";
 import SideBarCart from "../Carts/SideBarCart";
 import "./CartCheckout.css"
+import ShippingAddressForm from "./AddressForm";
+import TotalPayment from "./TotalPayment";
+import ListItems from "./ListItems";
+import Footer from "../../components/Footer/Footer";
 
 const stripePromise = loadStripe("pk_test_51PsUOH09RkIU57HOzoftVmkbstnWM6yHh9penKDnT5kvgDhRAMvHEx6AaAsDhoJ8jEwxx5zEEb8ATKASB5aN1oOy00j8qR6hTF");
 
 
 const CartCheckout = () => {
+
+    const [cardNumber, setCardNumber] = useState("");
+
+    // Function to format the card number (e.g., 1234 5678 9012 3456)
+    const handleCardNumberChange = (e) => {
+        let value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+        value = value.replace(/(\d{4})/g, "$1 ").trim(); // Add space every 4 digits
+        setCardNumber(value);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        alert("Card Submitted: " + cardNumber);
+    };
 
     const location = useLocation();
 
@@ -35,45 +53,58 @@ const CartCheckout = () => {
     return (
         <>
             <Navbar />
-            <div className="bg-grey" style={{ height: "100vh" }}>
-                <div className="container">
+            <div className="bg-grey" style={{ height: "100vh"}}>
+                <div className="container ">
                     <h2 className="montserrat-normal pt-3 mt-2 mb-3 pb-2">Checkout</h2>
-                    <div className="d-flex flex-row">
-                        <div className="container-list-product p-3">
-                            {selectedCart && selectedCart.map((cart, index) => (
-                                <div className="container-cart-product">
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                            <div className="d-flex flex-row">
-                                                <img className="image-cart" src={cart.imageProduct} alt={cart.productName + "_" + index} width="128px" />
-                                                <div className="d-flex flex-column container-wording-product">
-                                                    <span className="montserrat-normal">{cart.productName}</span>
-                                                    <span className="montserrat-light">Size <span className="montserrat-normal">{cart.size}</span></span>
-                                                    <span className="montserrat-light">x{cart.quantity}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-3">
+                    
+                    <div className="d-flex flex-row justify-content-between pb-3">
 
-                                        </div>
-                                        <div className="col-md-3" style={{ textAlign: "right" }}>
-                                            <span className="montserrat-normal wording-price">${cart.price}</span>
-                                        </div>
-                                    </div>
-                                    {index !== selectedCart.length - 1 && <hr></hr>}
+                        <ListItems 
+                            selectedCart={selectedCart} />
+
+                        <div className="accordion accordion-flush accordion-container" style={{zIndex:"100"}}>
+                            <div className="accordion-item" id="accordion-payment">
+                                <h3 className="accordion-header">
+                                    <button class="accordion-button montserrat-normal" 
+                                    type="button" 
+                                    data-bs-toggle="collapse" 
+                                    data-bs-target="#accordionPayment"
+                                     aria-expanded="false" 
+                                     aria-controls="accordionPayment">
+                                        Total Payment   
+                                    </button>
+                                </h3>
+                                <div className="accordion-collapse collapse" id="accordionPayment">
+                                    <TotalPayment
+                                        totalPrice={totalPrice} 
+                                        cardNumber={cardNumber}
+                                        handleCardNumberChange={handleCardNumberChange} />
                                 </div>
-                            ))}
-                        </div>
-                        <div className="container-checkout">
-                            <div className="wording-payment montserrat-normal">
-                                Payment
-                            </div>                        
-                            <hr></hr>
-                        </div>
+                            </div>
+                            <div className="accordion-item" id="accordion-shipping">
+                                <h3 className="accrodion-header"> 
+                                    <button className="accordion-button montserrat-normal" type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#accordionShipping"
+                                        aria-expanded="false"
+                                        aria-controls="accordionShipping">
+                                        Shipping Address
+                                    </button>
+                                </h3>
+                                <div className="accordion-collapse collapse" id="accordionShipping">
+                                    <ShippingAddressForm/>
+                                </div>
+                            </div>
+                        </div>    
+                     
                     </div>
+                    {/* <div className="container-address-detail">
+                        <ShippingAddressForm />
+                    </div> */}
 
                 </div>
             </div>
+            <Footer/>
         </>
     )
 }

@@ -16,6 +16,8 @@ import { setUser } from '../userSlice';  // Import the setUser action
 import { useDispatch } from 'react-redux';
 import { useTokenContext } from "../context/TokenContext";
 
+import { ethers } from "ethers";
+
 axios.defaults.withCredentials = true; // Set this globally if all requests use it
 
 const Login = () => {
@@ -37,6 +39,25 @@ const Login = () => {
 
     const modelImage = [model1, model2, model3, model4]
     const [indexImage, setIndexImage] = useState(0) 
+
+    const [userAddress, setUserAddress] = useState(null);
+
+    // Function to connect MetaMask
+    const connectWallet = async () => {
+        if (window.ethereum) {
+            try {
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                const signer = await provider.getSigner();
+                const address = await signer.getAddress();
+                setUserAddress(address);
+                console.log("Connected Address:", address);
+            } catch (error) {
+                console.error("Error connecting wallet:", error);
+            }
+        } else {
+            alert("MetaMask not detected! Please install MetaMask.");
+        }
+    };
    
 
     useEffect(() => {
@@ -76,6 +97,9 @@ const Login = () => {
                         username : response.data.name
                     }
                 ))
+                
+
+                connectWallet();
                 
                 navigate("/")
             } 

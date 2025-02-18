@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faTrash , faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 import "./CartComponent.css"
@@ -15,7 +15,7 @@ const CartComponent = (props) => {
     const { setListOfCart } = useCartContext();
     const { totalPriceCart , setTotalPriceCart } = useCartPriceContext();
 
-    const {productId, productName, imageProduct, price, quantity, size, checkboxHandler, changeItemHandler, isCheckOut } = props
+    const {productId, productName, imageProduct, price, quantity, size, checkboxHandler, changeItemHandler, isCheckOut, selectAllCart} = props
 
     const [ itemsTotal , setItemsTotal] = useState(quantity);
 
@@ -151,6 +151,12 @@ const CartComponent = (props) => {
             </>
         )
     }
+
+    useEffect(() => {
+        if (checkboxRef.current) {
+            checkboxRef.current.checked = selectAllCart;
+        }
+    }, [selectAllCart]);
 
     return (
         <>

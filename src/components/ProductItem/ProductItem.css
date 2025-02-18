@@ -5,3 +5,33 @@
 #image_product {
     border-radius: 8px;
 }
+
+@keyframes fadeIn {
+    0% {opacity : 0;}
+    100% { opacity : 1;}
+  }
+  
+
+.items {
+    background-color: #f3f3f3;
+    padding: 12px;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.items:hover{
+   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Tambah shadow biar lebih "angkat" */
+   background-color: antiquewhite;
+}
+
+.fade-in.show {
+    opacity: 1;
+    transform: translateY(0); /* Kembali ke posisi normal */
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px); /* Geser dikit ke bawah biar efek lebih smooth */
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}

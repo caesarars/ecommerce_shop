@@ -7,9 +7,15 @@
     background-color: rgb(241, 241, 241);
 }
 .container-list-product {
-    width: 56%;
+    width: 60%;
     background-color: white;
     border-radius: 6px;
+height: fit-content;
+    overflow: auto;
+}
+
+.accordion-container {
+    width: 35%;
 }
 
 .container-cart-product {
@@ -29,13 +35,44 @@
 }
 
 .container-checkout {
-    width: 28%;
+    width: 35%;
     background-color: white;
     border-radius: 6px;
     margin-left: 64px;
+    min-height: 50vh;
+    max-height: fit-content;
 }
 
 .wording-payment {
     padding-left: 8px;
     padding-top: 16px;
+}
+.wording-total-payment {
+    padding-left: 8px;
+}
+.container-address-detail {
+    width: 100%;
+}
+
+.container-form-address-detail {
+    border: none;
+    min-height: 20vh;
+    max-height: fit-content;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-in-out;
+    opacity: 0;
+}
+
+.accordion-item button[aria-expanded="true"] + .accordion-content {
+    max-height: 500px; /* Atur sesuai konten */
+    opacity: 1;
+}
+
+.container-shipping-address {
+    max-height: 380px;
+    overflow: auto;
 }

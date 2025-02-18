@@ -15,7 +15,7 @@ import { API_URLS } from "../../api/apiURLs"; // Adjust the path as necessary
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
 import Navbar from "../Navbar";
 
-const Product = () => {
+const Product = ({handleLoading}) => {
     const { userId } = useUserContext(); // Access userId from context
 
     useEffect(() => {
@@ -65,6 +65,7 @@ const Product = () => {
 
     const getDetailProduct = async () => {
         setIsLoading(true)
+        handleLoading(true)
         const response = await axios.get(URL_GET_PRODCUT)
         console.log("response get detail product " , response)
         setNameProduct(response.data.name)
@@ -78,6 +79,7 @@ const Product = () => {
         setProductId(response.data._id)
         console.log("response detail ", response.data)
         setIsLoading(false)
+        handleLoading(false)
     }
 
     const showModal = () => {
@@ -148,10 +150,9 @@ const Product = () => {
     const detailPage = () => {
         return (
             <>
-                <LoadingComponent isLoading={isLoading}/>
                 <Navbar />
 
-                <div className="d-flex mt-5">
+                <div className="d-flex mt-5 mb-5">
                 <div className="container_detail_left">
                     <div className="container_image d-flex">
                     

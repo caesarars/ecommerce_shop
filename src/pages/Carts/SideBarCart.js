@@ -16,8 +16,8 @@ const SideBarCart = ({totalPrice, selectedCart, isCheckOut}) => {
 
     return (
         <>
-            <div className="sidebar_cart">
-                <div className="container_sidebar">
+            <div className="sidebar_cart shadow">
+                <div className="container_sidebar ">
                     <span className="montserrat-normal" style={{fontSize:"28px"}}>TOTAL</span>
                     <p className="montserrat-light" style={{fontSize:"18px"}}>${Math.ceil(totalPrice)}</p>
                     <div>

@@ -1,7 +1,14 @@
 import React , {useState} from "react"
+import { ethers } from "ethers";
 import "./Sandbox.css"
+import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../SmartContract"
 
 const Sandbox = () => {
+
+    const [ userAddress, setUserAddress ] = useState("");
+    const [weiAmount, setWeiAmount] = useState(0)
+    const [recepient , setRecepient] = useState(0);
+    const [ balance , setBalance ] = useState(0)
 
     const images = [
         'https://via.placeholder.com/400x300/FF5733/FFFFFF?text=Image+1',
@@ -40,9 +47,76 @@ const Sandbox = () => {
         }
     };
 
+    const connectWallet = async () => {
+        if (window.ethereum) {
+            try {
+                const provider =  new ethers.BrowserProvider(window.ethereum) ;
+                const signer = await provider.getSigner();
+                const address = await signer.getAddress();
+                console.log("address : ", address)
+                setUserAddress(address)
+
+                sendTransaction()
+            } catch(error) {
+                console.error(error);
+            }
+        } else {
+            alert("MetaMask not detected! Please install MetaMask.");
+        }
+    }
+
+    const handleWeiAmount = (e) => {
+        setWeiAmount(e.target.value)
+    }
+
+    const handleRecepient = (e) => {
+        setRecepient(e.target.value)
+    }
+
+    const ethToWei = (amountInEth) => {
+        return ethers.parseUnits(amountInEth.toString(), "ether"); // Converts ETH to Wei
+    };
+
+    const sendTransaction = async () => {
+        try {
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            const signer = await provider.getSigner();
+            const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
+            const tx = await contract.deposit(ethToWei(weiAmount), {
+                value: ethToWei(weiAmount),
+            });
+
+            await tx.wait();
+            alert(`Deposit Successful: ${tx.hash}`);
+        } catch (error) {
+            console.error("Transaction failed:", error);
+        }
+    }
+
+    const getBalances = async () => {
+        if (!window.ethereum) {
+            alert("MetaMask is required!");
+            return;
+        }
+
+        try {
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            const signer = await provider.getSigner();
+            const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
+            // Call the getBalance function from the smart contract
+            const contractBalance = await contract.getBalance();
+            console.log("contract balance : " , contractBalance)
+            setBalance(ethers.formatUnits(contractBalance, "ether")); // Convert Wei to ETH
+        } catch (error) {
+            console.error("Error fetching balance:", error);
+        }
+    }
+
     return (
         <div className="container w-50 mt-5">
-            <div className="box mb-5"></div>
+            {/* <div className="box mb-5"></div>
 
             <div className="carousel-container">
             <div
@@ -68,11 +142,26 @@ const Sandbox = () => {
                 Next
             </button>
         </div>
-
             <div className="box2"></div>
             <div className="box3"></div>
             <div className="box4"></div>
             <div className="box5"></div>
+
+            <div className="web3-payment"><p>Web 3 Payment</p>
+                    <input type="text" placeholder="Wei amount" onChange={handleWeiAmount} />
+                    <input type="text" placeholder="Recepient" onChange={handleRecepient} />
+                    <br></br>
+                <button className="btn btn-success" onClick={() => connectWallet()}>Pay Here</button><br></br>
+                <button className="btn btn-primary" onClick={() => getBalances()}>Get Balance</button>
+                <br></br>
+                <h4>{balance}</h4>
+            </div>
+            */}
+            <div className=" test1">
+            </div>
+            <div className="popup">
+                welcome
+            </div>
         </div>
     )
 }

@@ -26,7 +26,7 @@ const NewArrival = () => {
             const response = await axios.get(URL_GET_PRODCUTS, {
                 params:params
             })
-            //setData(response.data.products)
+            setData(response.data.products)
     
         } catch(err) {
             console.error(err.message)

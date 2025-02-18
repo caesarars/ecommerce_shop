@@ -148,3 +148,35 @@
     right: 10px;
 }
 
+.test1 {
+    background-color: red;
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    animation: bounce 1s infinite ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% {transform: translateY(-20px);}
+}
+
+@keyframes fadeIn {
+    0% {opacity : 0; transform : translate(-50%, -50%) scale(0.8);}
+    100% { opacity : 1; transform : translate(-50%, -50%) scale(1);}
+}
+
+.popup {
+    width: 300px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+    animation-delay: 1s; /* Muncul otomatis setelah 1 detik */
+  }
